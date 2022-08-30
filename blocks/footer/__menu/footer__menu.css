@@ -1,0 +1,16 @@
+.footer__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  column-gap: 18.5px;
+}
+
+@media (max-width: 767px) {
+  .footer__menu {
+    gap: 31px 0;
+    flex-direction: column;
+  }
+}
+
+
