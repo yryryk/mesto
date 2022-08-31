@@ -1,15 +1,6 @@
 .footer {
-  display: flex;
-  margin: var(--footer-margin-top) var(--footer-horizontal-margin) 24px;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-@media (max-width: 767px) {
-  .footer {
-    min-height: 310px;
-    flex-direction: column;
-    margin: 64px 16px 24px 16px;
-    align-items: flex-start;
-  }
+  width: calc(((100vw - 320px) / (1280 - 320)) * (880 - 282) + 282px);
+  max-width: 880px;
+  height: calc(((100vw - 320px) / (1280 - 320)) * (78 - 50) + 50px);
+  margin: calc(((100vw - 320px) / (1280 - 320)) * (66 - 48) + 48px) auto 0;
 }
