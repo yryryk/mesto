@@ -1,0 +1,20 @@
+.profile__add-button {
+  width: 150px;
+  height: 50px;
+  background-image: url(../../../images/Vector-add-button.svg);
+  background-size: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  outline: 2px solid #FFF;
+  outline-offset: -2px;
+  background-color: #000;
+  padding: 0;
+}
+
+@media (max-width: 767px) {
+  .profile__add-button {
+    width: 100%;
+    background-size: calc(((100vw - 320px) / (767 - 320)) * (22 - 16) + 16px);
+  }
+}
