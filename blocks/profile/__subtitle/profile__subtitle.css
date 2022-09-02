@@ -3,7 +3,10 @@
   font-size: 18px;
   line-height: 22px;
   margin: 0;
-  margin-top: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  grid-area: subtitle;
 }
 
 @media (max-width: 767px) {

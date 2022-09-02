@@ -9,14 +9,16 @@
   outline: 1px solid #FFF;
   outline-offset: -1px;
   background-color: #000;
-  margin-left: 9px;
   padding: 0;
+  margin-top: 14px;
+  grid-area: button;
 }
 
 @media (max-width: 767px) {
   .profile__edit-button {
     width: calc(((100vw - 320px) / (767 - 320)) * (24 - 18) + 18px);
     height: calc(((100vw - 320px) / (767 - 320)) * (24 - 18) + 18px);
-    margin-left: calc(((100vw - 320px) / (767 - 320)) * (9 - 3) + 3px);
+    margin: 0;
+    align-self: center;
   }
 }

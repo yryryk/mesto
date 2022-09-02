@@ -22,9 +22,8 @@
       <div class="profile__user">
         <div class="profile__user-picture"></div>
         <div class="profile__user-info">
-          <h1 class="profile__title">Жак-Ив Кусто
-            <button class="profile__edit-button"></button>
-          </h1>
+          <h1 class="profile__title">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button"></button>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
       </div>
@@ -79,12 +78,21 @@
         </figcaption>
       </figure>
     </section>
+    <section class="popup">
+      <form class="popup__input">
+        <button type="button" class="popup__close-button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" name="title" class="input popup__add-title" value="">
+        <input type="text" name="subtitle" class="input popup__add-subtitle" value="">
+        <button type="submit" class="popup__submit-button">Сохранить</button>
+      </form>
+    </section>
   </main>
 
   <footer class="footer">
-    <p class="footer__copyright">© 2022 Mesto Russia</p>
+    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
-  <script src="путь к файлу"></script>
+  <script src="scripts/index.js"></script>
 </body>
 
 </html>
