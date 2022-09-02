@@ -2,14 +2,13 @@
 
 @import url(../vendor/fonts/inter.css);
 
-
 @import url(../blocks/page/page.css);
 @import url(../blocks/header/header.css);
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/link-opacity/link-opacity.css);
+@import url(../blocks/button-opacity/button-opacity.css);
 @import url(../blocks/input/input.css);
 
 @import url(../blocks/header/__logo/header__logo.css);
@@ -23,7 +22,7 @@
 @import url(../blocks/elements/__photo/elements__photo.css);
 @import url(../blocks/elements/__image/elements__image.css);
 @import url(../blocks/elements/__title/elements__title.css);
-@import url(../blocks/elements/__photo-button/elements__photo-button.css);
+@import url(../blocks/elements/__like-button/elements__like-button.css);
 @import url(../blocks/elements/__caption/elements__caption.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);

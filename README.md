@@ -1,17 +1,13 @@
 # Проект: Место
 
-### Обзор
+## Описание
 
-* Figma
-* Картинки
+Адаптивный сайт с частично реализованной интерактивностью, который впоследствии будет преобразован в сервис Mesto: интерактивной страницей, куда можно будет добавлять фотографии, удалять их и ставить лайки.
 
-**Figma**
+### Использованные технологии
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+Сделано по макету из [Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1 "https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1") с использованием: html, css, flex, grid, pseudo-class, адаптивная верстка, PerfectPixel, JavaScript, Document Object Model и др.
 
-**Картинки**
+### Ссылка на сайт проекта
 
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
-
-Удачи!
+[Проект: Место](https://yryryk.github.io/mesto/ "https://yryryk.github.io/mesto/")

@@ -8,7 +8,7 @@
 
 @media (max-width: 767px) {
   .popup__title {
-    font-size: calc(((100vw - 320px) / (767 - 320)) * (24 - 18) + 18px);
-    line-height: calc(((100vw - 320px) / (767 - 320)) * (29 - 22) + 22px);
+    font-size: 18px;
+    line-height: 22px;
   }
 }

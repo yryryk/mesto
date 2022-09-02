@@ -1,0 +1,22 @@
+.elements__like-button {
+  height: 19px;
+  width: 22px;
+  background-image: url(../../../images/Vector-photo-button.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  background-color: #fff;
+  opacity: 1;
+  transition: opacity .5s ease-out;
+}
+
+.elements__like-button:hover {
+  cursor: pointer;
+  opacity: .5;
+}
+
+.elements__like-button:active {
+  background-image: url(../../../images/Union.svg);
+  opacity: 1;
+}

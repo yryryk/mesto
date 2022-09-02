@@ -11,6 +11,8 @@
   line-height: 22px;
   text-align: center;
   color: #FFF;
+  opacity: 1;
+  transition: opacity .5s ease-out;
 }
 
 @media (max-width: 767px) {
@@ -20,4 +22,9 @@
     font-size: 14px;
     line-height: 17px;
   }
+}
+
+.popup__submit-button:hover {
+  cursor: pointer;
+  opacity: .8;
 }
