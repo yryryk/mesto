@@ -25,6 +25,7 @@ function formToggle () {
 function formOpener () {
   getValue (nameInput, nameOutput);
   getValue (jobInput, jobOutput);
+  formToggle ();
 }
 
 function formSubmitHandler (evt) {
@@ -36,7 +37,6 @@ function formSubmitHandler (evt) {
 }
 
 profileEditButton.addEventListener('click', formOpener);
-profileEditButton.addEventListener('click', formToggle);
 formCloseButton.addEventListener('click', formToggle);
 formElement.addEventListener('submit', formSubmitHandler);
 
