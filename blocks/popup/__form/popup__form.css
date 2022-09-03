@@ -1,0 +1,14 @@
+.popup__form {
+  margin-top: 43px;
+}
+
+
+@media (max-width: 767px) {
+  .popup__form {
+    margin-top: 69px;
+  }
+}
+
+.popup__form :first-child{
+  margin-bottom: 25px;
+}

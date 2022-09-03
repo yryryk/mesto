@@ -1,8 +1,7 @@
-.elements__caption {
-  height: 78.6px;
+.elements__paraphernalia {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding: 0 20px 0 21px;
+  padding: 24.3px 20px 24.3px 21px;
 }

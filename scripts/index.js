@@ -1,8 +1,8 @@
 
-const form = document.querySelector('.popup');
-const formElement = form.querySelector('.popup__input');
-const nameInput = formElement.querySelector('.popup__add-title');
-const jobInput = formElement.querySelector('.popup__add-subtitle');
+const form = document.querySelector('.overlay');
+const formElement = form.querySelector('.popup');
+const nameInput = formElement.querySelector('[name="title"]');
+const jobInput = formElement.querySelector('[name="subtitle"]');
 const formCloseButton = form.querySelector('.popup__close-button');
 
 const blockOutput = document.querySelector('.profile');
@@ -25,6 +25,7 @@ function formToggle () {
 function formOpener () {
   getValue (nameInput, nameOutput);
   getValue (jobInput, jobOutput);
+  formToggle ();
 }
 
 function formSubmitHandler (evt) {
@@ -36,7 +37,6 @@ function formSubmitHandler (evt) {
 }
 
 profileEditButton.addEventListener('click', formOpener);
-profileEditButton.addEventListener('click', formToggle);
 formCloseButton.addEventListener('click', formToggle);
 formElement.addEventListener('submit', formSubmitHandler);
 
