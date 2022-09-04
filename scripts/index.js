@@ -19,7 +19,7 @@ function addValue (input, output) {
 }
 
 function formToggle () {
-  form.classList.toggle('popup_open');
+  form.classList.toggle('overlay_open');
 }
 
 function formOpener () {
@@ -43,7 +43,7 @@ formElement.addEventListener('submit', formSubmitHandler);
 document.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape') {
     for (let formClass of form.classList) {
-      if (formClass === 'popup_open') {
+      if (formClass === 'overlay_open') {
         formToggle();
       }
     }
