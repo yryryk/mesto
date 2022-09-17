@@ -96,19 +96,27 @@ initialCards.forEach ( (item) => {
   cloneFormElement(item.name, item.link, 'append')
 })
 
-// Лайкать
+// Лайкать картинки
 const elementsLikeButton = elements.querySelectorAll('.elements__like-button');
 
 function likeButton(evt) {
   evt.target.closest('.elements__like-button').classList.toggle('elements__like-button_active')
 }
 
+// Удалять картинки
+const elementsTrashButton = elements.querySelectorAll('.elements__delete-button');
+
+function deleteButton(evt) {
+  evt.target.closest('.elements__photo').remove();
+}
+
 // Слушать
 profileEditButton.addEventListener('click', openPopupProfile);
 elementAddButton.addEventListener('click', openPopupElement);
-formCloseButton.forEach((b) => b.addEventListener('click', closePopup))
+formCloseButton.forEach((c) => c.addEventListener('click', closePopup))
 overlay.addEventListener('submit', submitForm);
 elementsLikeButton.forEach((a) => a.addEventListener('click', likeButton))
+elementsTrashButton.forEach((d) => d.addEventListener('click', deleteButton))
 
 // Отказаться
 document.addEventListener('keydown', (evt) => {
