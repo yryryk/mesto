@@ -76,13 +76,22 @@
     </section>
 
     <section class="overlay">
-      <div class="popup">
+      <div class="popup" id="profile-popup">
         <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="form">
           <input type="text" name="title" class="input" value="">
           <input type="text" name="subtitle" class="input" value="">
           <button aria-label="submit" type="submit" class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+      <div class="popup" id="element-popup">
+        <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="form">
+          <input type="text" name="title" class="input" placeholder="Новое место">
+          <input type="text" name="subtitle" class="input" placeholder="Ссылка на картинку">
+          <button aria-label="submit" type="submit" class="popup__submit-button">Создать</button>
         </form>
       </div>
     </section>

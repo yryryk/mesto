@@ -32,3 +32,4 @@
 @import url(../blocks/popup/__submit-button/popup__submit-button.css);
 
 @import url(../blocks/overlay/_open/overlay_open.css);
+@import url(../blocks/popup/_open/popup_open.css);
