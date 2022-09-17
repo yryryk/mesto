@@ -31,7 +31,7 @@
     </section>
 
     <section class="elements" aria-label="Секция с картинками">
-      <div class="elements__photo">
+      <!-- <div class="elements__photo">
         <img class="elements__image" src="images/kirill-pershin-1088404-unsplash.jpg" alt="крепость">
         <div class="elements__paraphernalia">
           <h2 class="elements__title">Карачаевск</h2>
@@ -72,7 +72,7 @@
           <h2 class="elements__title">Карачаево-Черкесия</h2>
           <button aria-label="like" type="button" class="elements__like-button"></button>
         </div>
-      </div>
+      </div> -->
     </section>
 
     <section class="overlay">
@@ -86,11 +86,21 @@
         </form>
       </div>
     </section>
+    <template id="element">
+      <div class="elements__photo">
+        <img class="elements__image" src="" alt="">
+        <div class="elements__paraphernalia">
+          <h2 class="elements__title"></h2>
+          <button aria-label="like" type="button" class="elements__like-button"></button>
+        </div>
+      </div>
+    </template>
   </main>
 
   <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
+  <script src="scripts/images.js"></script>
   <script src="scripts/index.js"></script>
 </body>
 
