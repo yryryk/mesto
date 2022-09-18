@@ -46,7 +46,9 @@ function openPopup (pop) {
 // Закрыть попап крестиком
 function closePopup (evt) {
   const targetPopup = evt.target.closest('#popup');
-  targetPopup.classList.remove('popup_open');
+  setTimeout(()=>{
+    targetPopup.classList.remove('popup_open');
+  }, 1000);
   toggleOverlay ();
   if (targetPopup.classList.contains('image-popup')) {
     overlay.classList.remove('overlay_make-color_dark');
@@ -113,12 +115,16 @@ function submitForm (evt) {
   if (popupProfile.classList.contains('popup_open')) {
     addValue (nameInput, nameOutput);
     addValue (jobInput, jobOutput);
-    popupProfile.classList.remove('popup_open');
+    setTimeout(()=>{
+      popupProfile.classList.remove('popup_open');
+    }, 1000);
   }
   // Вставить картинку
   if (popupElement.classList.contains('popup_open')) {
-    elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value))
-    popupElement.classList.remove('popup_open');
+    elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value));
+    setTimeout(()=>{
+      popupElement.classList.remove('popup_open');
+    }, 1000);
   }
 
   toggleOverlay ();
@@ -136,15 +142,17 @@ document.addEventListener('keydown', (evt) => {
     if (overlay.classList.contains('overlay_open')) {
       toggleOverlay();
     }
-    if (popupProfile.classList.contains('popup_open')) {
-      popupProfile.classList.remove('popup_open');
-    }
-    if (popupElement.classList.contains('popup_open')) {
-      popupElement.classList.remove('popup_open');
-    }
-    if (popupImage.classList.contains('popup_open')) {
-      popupImage.classList.remove('popup_open');
-      overlay.classList.remove('overlay_make-color_dark');
-    }
+    setTimeout(()=>{
+      if (popupProfile.classList.contains('popup_open')) {
+        popupProfile.classList.remove('popup_open');
+      }
+      if (popupElement.classList.contains('popup_open')) {
+        popupElement.classList.remove('popup_open');
+      }
+      if (popupImage.classList.contains('popup_open')) {
+        popupImage.classList.remove('popup_open');
+        overlay.classList.remove('overlay_make-color_dark');
+      }
+    }, 1000);
   }
 });
