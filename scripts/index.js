@@ -1,11 +1,15 @@
 // Ссылки на оверлей
 const overlay = document.querySelector('.overlay');
-const formProfile = overlay.querySelector('#profile-popup');
-const formElement = overlay.querySelector('#element-popup');
-const nameInput = formProfile.querySelector('[name="title"]');
-const jobInput = formProfile.querySelector('[name="subtitle"]');
-const nameElementInput = formElement.querySelector('[name="name"]');
-const linkElementInput = formElement.querySelector('[name="link"]');
+const popups = overlay.querySelectorAll('#popup');
+const popupProfile = popups[0];
+const popupElement = popups[1];
+const popupImage = popups[2];
+const image = popupImage.querySelector('.image-popup__image');
+const imageTitle = popupImage.querySelector('.image-popup__title');
+const nameInput = popupProfile.querySelector('[name="title"]');
+const jobInput = popupProfile.querySelector('[name="subtitle"]');
+const nameElementInput = popupElement.querySelector('[name="name"]');
+const linkElementInput = popupElement.querySelector('[name="link"]');
 const formCloseButton = overlay.querySelectorAll('.popup__close-button');
 // Ссылки на профиль
 const blockOutput = document.querySelector('.profile');
@@ -41,73 +45,83 @@ function openPopup (pop) {
 
 // Закрыть попап крестиком
 function closePopup (evt) {
-  const targetPopup = evt.target.closest('.popup');
+  const targetPopup = evt.target.closest('#popup');
   targetPopup.classList.remove('popup_open');
   toggleOverlay ();
+  if (targetPopup.classList.contains('image-popup')) {
+    overlay.classList.remove('overlay_make-color_dark');
+  }
 }
 
 // Открыть попапы
 function openPopupProfile () {
   getValue (nameInput, nameOutput);
   getValue (jobInput, jobOutput);
-  openPopup (formProfile)
+  openPopup (popupProfile)
 }
 
 function openPopupElement () {
-  openPopup (formElement)
+  openPopup (popupElement)
 }
 
+function openPopupImage (evt) {
+  const initialImage = evt.target;
+  image.src = initialImage.src;
+  imageTitle.textContent = initialImage.alt;
+  overlay.classList.add('overlay_make-color_dark');
+  openPopup (popupImage);
+}
+
+// Лайкать картинки
+function likeButton(evt) {
+  evt.target.classList.toggle('elements__like-button_active')
+}
+
+// Удалять картинки
+function deleteButton(evt) {
+  evt.target.closest('.elements__photo').remove();
+}
+
+// Загрузить начальные картинки
+initialCards.forEach ( (item) => {
+  elements.append(cloneFormElement(item.name, item.link))
+})
+
 // Вставить картинку
-function cloneFormElement(name, link, place) {
+function cloneFormElement(name, link) {
   const elementsPhoto = elementTemplate.querySelector('.elements__photo').cloneNode(true);
   elementsPhoto.querySelector('.elements__image').src = link;
   elementsPhoto.querySelector('.elements__image').alt = name;
   elementsPhoto.querySelector('.elements__title').textContent = name;
+  // Лайкать картинки
+  const elementsLikeButton = elementsPhoto.querySelector('.elements__like-button');
+  elementsLikeButton.addEventListener('click', likeButton);
+  // Удалять картинки
+  const elementsTrashButton = elementsPhoto.querySelector('.elements__delete-button');
+  elementsTrashButton.addEventListener('click', deleteButton);
+  // Просматривать картинки
+  const elementsImage = elementsPhoto.querySelector('.elements__image');
+  elementsImage.addEventListener('click', openPopupImage);
 
-  if (place ==='append'){
-    elements.append(elementsPhoto);
-  }
-
-  if (place ==='prepend'){
-    elements.prepend(elementsPhoto);
-  }
+  return elementsPhoto
 }
 
 // Согласиться
 function submitForm (evt) {
   evt.preventDefault();
-
-  if (formProfile.classList.contains('popup_open')) {
+  // Редактировать профиль
+  if (popupProfile.classList.contains('popup_open')) {
     addValue (nameInput, nameOutput);
     addValue (jobInput, jobOutput);
-    formProfile.classList.remove('popup_open');
+    popupProfile.classList.remove('popup_open');
   }
-
-  if (formElement.classList.contains('popup_open')) {
-    cloneFormElement(nameElementInput.value, linkElementInput.value, 'prepend')
-    formElement.classList.remove('popup_open');
+  // Вставить картинку
+  if (popupElement.classList.contains('popup_open')) {
+    elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value))
+    popupElement.classList.remove('popup_open');
   }
 
   toggleOverlay ();
-}
-
-// Загрузить начальные картинки
-initialCards.forEach ( (item) => {
-  cloneFormElement(item.name, item.link, 'append')
-})
-
-// Лайкать картинки
-const elementsLikeButton = elements.querySelectorAll('.elements__like-button');
-
-function likeButton(evt) {
-  evt.target.closest('.elements__like-button').classList.toggle('elements__like-button_active')
-}
-
-// Удалять картинки
-const elementsTrashButton = elements.querySelectorAll('.elements__delete-button');
-
-function deleteButton(evt) {
-  evt.target.closest('.elements__photo').remove();
 }
 
 // Слушать
@@ -115,8 +129,6 @@ profileEditButton.addEventListener('click', openPopupProfile);
 elementAddButton.addEventListener('click', openPopupElement);
 formCloseButton.forEach((c) => c.addEventListener('click', closePopup))
 overlay.addEventListener('submit', submitForm);
-elementsLikeButton.forEach((a) => a.addEventListener('click', likeButton))
-elementsTrashButton.forEach((d) => d.addEventListener('click', deleteButton))
 
 // Отказаться
 document.addEventListener('keydown', (evt) => {
@@ -124,11 +136,15 @@ document.addEventListener('keydown', (evt) => {
     if (overlay.classList.contains('overlay_open')) {
       toggleOverlay();
     }
-    if (formProfile.classList.contains('popup_open')) {
-      formProfile.classList.remove('popup_open');
+    if (popupProfile.classList.contains('popup_open')) {
+      popupProfile.classList.remove('popup_open');
     }
-    if (formElement.classList.contains('popup_open')) {
-      formElement.classList.remove('popup_open');
+    if (popupElement.classList.contains('popup_open')) {
+      popupElement.classList.remove('popup_open');
+    }
+    if (popupImage.classList.contains('popup_open')) {
+      popupImage.classList.remove('popup_open');
+      overlay.classList.remove('overlay_make-color_dark');
     }
   }
 });
