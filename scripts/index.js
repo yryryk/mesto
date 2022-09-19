@@ -1,9 +1,8 @@
 // Ссылки на оверлей
 const overlay = document.querySelector('.overlay');
-const popups = overlay.querySelectorAll('#popup');
-const popupProfile = popups[0];
-const popupElement = popups[1];
-const popupImage = popups[2];
+const popupProfile = overlay.querySelector('#popup-profile');
+const popupElement = overlay.querySelector('#popup-element');
+const popupImage = overlay.querySelector('#popup-image');
 const image = popupImage.querySelector('.image-popup__image');
 const imageTitle = popupImage.querySelector('.image-popup__title');
 const nameInput = popupProfile.querySelector('[name="title"]');
@@ -45,10 +44,10 @@ function openPopup (pop) {
 
 // Закрыть попап крестиком
 function closePopup (evt) {
-  const targetPopup = evt.target.closest('#popup');
+  const targetPopup = evt.target.closest('[data-point="popup"]');
   setTimeout(()=>{
     targetPopup.classList.remove('popup_open');
-  }, 1000);
+  }, 500);
   toggleOverlay ();
   if (targetPopup.classList.contains('image-popup')) {
     overlay.classList.remove('overlay_make-color_dark');
@@ -117,14 +116,14 @@ function submitForm (evt) {
     addValue (jobInput, jobOutput);
     setTimeout(()=>{
       popupProfile.classList.remove('popup_open');
-    }, 1000);
+    }, 500);
   }
   // Вставить картинку
   if (popupElement.classList.contains('popup_open')) {
     elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value));
     setTimeout(()=>{
       popupElement.classList.remove('popup_open');
-    }, 1000);
+    }, 500);
   }
 
   toggleOverlay ();
@@ -153,6 +152,6 @@ document.addEventListener('keydown', (evt) => {
         popupImage.classList.remove('popup_open');
         overlay.classList.remove('overlay_make-color_dark');
       }
-    }, 1000);
+    }, 500);
   }
 });

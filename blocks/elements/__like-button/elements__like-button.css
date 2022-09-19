@@ -12,7 +12,11 @@
   padding: 0;
 }
 
-.elements__like-button:hover {
-  cursor: pointer;
-  opacity: .5;
+@media (any-hover: hover) {
+  .elements__like-button:hover {
+    cursor: pointer;
+    opacity: .5;
+  }
 }
+
+
