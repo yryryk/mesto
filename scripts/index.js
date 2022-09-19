@@ -3,8 +3,8 @@ const overlay = document.querySelector('.overlay');
 const popupProfile = overlay.querySelector('#popup-profile');
 const popupElement = overlay.querySelector('#popup-element');
 const popupImage = overlay.querySelector('#popup-image');
-const image = popupImage.querySelector('.image-popup__image');
-const imageTitle = popupImage.querySelector('.image-popup__title');
+const image = popupImage.querySelector('.popup__image');
+const imageTitle = popupImage.querySelector('.popup__image-title');
 const nameInput = popupProfile.querySelector('[name="title"]');
 const jobInput = popupProfile.querySelector('[name="subtitle"]');
 const nameElementInput = popupElement.querySelector('[name="name"]');
@@ -44,12 +44,12 @@ function openPopup (pop) {
 
 // Закрыть попап крестиком
 function closePopup (evt) {
-  const targetPopup = evt.target.closest('[data-point="popup"]');
+  const targetPopup = evt.target.closest('.popup');
   setTimeout(()=>{
     targetPopup.classList.remove('popup_open');
   }, 500);
   toggleOverlay ();
-  if (targetPopup.classList.contains('image-popup')) {
+  if (targetPopup.classList.contains('popup_type_image')) {
     overlay.classList.remove('overlay_make-color_dark');
   }
 }

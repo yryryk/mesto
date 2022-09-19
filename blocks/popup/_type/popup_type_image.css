@@ -1,5 +1,4 @@
-.image-popup {
-  display: none;
+.popup_type_image {
   flex-direction: column;
   position: relative;
   margin-top: 22px;

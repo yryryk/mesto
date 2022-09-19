@@ -11,7 +11,6 @@
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/button-opacity/button-opacity.css);
 @import url(../blocks/input/input.css);
-@import url(../blocks/image-popup/image-popup.css);
 
 @import url(../blocks/header/__logo/header__logo.css);
 @import url(../blocks/profile/__user/profile__user.css);
@@ -32,10 +31,12 @@
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__submit-button/popup__submit-button.css);
-@import url(../blocks/image-popup/__image/image-popup__image.css);
-@import url(../blocks/image-popup/__title/image-popup__title.css);
+@import url(../blocks/popup/__image/popup__image.css);
+@import url(../blocks/popup/__image-title/popup__image-title.css);
 
 @import url(../blocks/overlay/_open/overlay_open.css);
 @import url(../blocks/popup/_open/popup_open.css);
 @import url(../blocks/elements/__like-button/_active/elements__like-button_active.css);
 @import url(../blocks/overlay/_make-color/overlay_make-color_dark.css);
+@import url(../blocks/popup/_type/popup_type_setter.css);
+@import url(../blocks/popup/_type/popup_type_image.css);
