@@ -32,25 +32,25 @@
 
     <section class="elements" aria-label="Секция с картинками">
     </section>
-
-    <template id="element">
-      <div class="elements__photo">
-        <img class="elements__image" src="#" alt="">
-        <div class="elements__paraphernalia">
-          <h2 class="elements__title"></h2>
-          <button aria-label="like" type="button" class="elements__like-button"></button>
-          <button aria-label="close" type="button" class="button-opacity elements__delete-button"></button>
-        </div>
-      </div>
-    </template>
   </main>
 
   <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
 
-  <div class="overlay">
-    <div class="popup popup_type_setter" id="popup-profile" data-point="popup">
+  <template id="element">
+    <div class="elements__photo">
+      <img class="elements__image" src="#" alt="">
+      <div class="elements__paraphernalia">
+        <h2 class="elements__title"></h2>
+        <button aria-label="like" type="button" class="elements__like-button"></button>
+        <button aria-label="close" type="button" class="button-opacity elements__delete-button"></button>
+      </div>
+    </div>
+  </template>
+
+  <div class="popup popup_type_setter" id="popup-profile" data-point="popup">
+    <div class="popup__window">
       <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="form">
@@ -59,7 +59,9 @@
         <button aria-label="submit" type="submit" class="popup__submit-button">Сохранить</button>
       </form>
     </div>
-    <div class="popup popup_type_setter" id="popup-element" data-point="popup">
+  </div>
+  <div class="popup popup_type_setter" id="popup-element" data-point="popup">
+    <div class="popup__window">
       <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" name="form">
@@ -68,7 +70,9 @@
         <button aria-label="submit" type="submit" class="popup__submit-button">Создать</button>
       </form>
     </div>
-    <div class="popup popup_type_image" id="popup-image" data-point="popup">
+  </div>
+  <div class="popup popup_type_image" id="popup-image" data-point="popup">
+    <div class="popup__image-window">
       <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
       <img class="popup__image" src="#" alt="">
       <h2 class="popup__image-title">Карачаево-Черкессия</h2>

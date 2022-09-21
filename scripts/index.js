@@ -1,15 +1,15 @@
 // Ссылки на оверлей
-const overlay = document.querySelector('.overlay');
-const popupProfile = overlay.querySelector('#popup-profile');
-const popupElement = overlay.querySelector('#popup-element');
-const popupImage = overlay.querySelector('#popup-image');
+const popups = document.querySelectorAll('.popup');
+const popupProfile = document.querySelector('#popup-profile');
+const popupElement = document.querySelector('#popup-element');
+const popupImage = document.querySelector('#popup-image');
 const image = popupImage.querySelector('.popup__image');
 const imageTitle = popupImage.querySelector('.popup__image-title');
 const nameInput = popupProfile.querySelector('[name="title"]');
 const jobInput = popupProfile.querySelector('[name="subtitle"]');
 const nameElementInput = popupElement.querySelector('[name="name"]');
 const linkElementInput = popupElement.querySelector('[name="link"]');
-const formCloseButton = overlay.querySelectorAll('.popup__close-button');
+const formCloseButton = document.querySelectorAll('.popup__close-button');
 // Ссылки на профиль
 const blockOutput = document.querySelector('.profile');
 const profileEditButton = blockOutput.querySelector('.profile__edit-button');
@@ -31,26 +31,17 @@ function addValue (input, output) {
   output.textContent = input.value;
 }
 
-// Переключить оверлей
-function toggleOverlay () {
-  overlay.classList.toggle('overlay_open');
-}
-
 // Открыть попап
 function openPopup (pop) {
   pop.classList.add('popup_open');
-  overlay.classList.add('overlay_open');
 }
 
 // Закрыть попап крестиком
 function closePopup (evt) {
   const targetPopup = evt.target.closest('.popup');
-  setTimeout(()=>{
-    targetPopup.classList.remove('popup_open');
-  }, 500);
-  toggleOverlay ();
+  targetPopup.classList.remove('popup_open');
   if (targetPopup.classList.contains('popup_type_image')) {
-    overlay.classList.remove('overlay_make-color_dark');
+    popupImage.classList.remove('popup_make-color_dark');
   }
 }
 
@@ -70,7 +61,7 @@ function openPopupImage (evt) {
   image.src = initialImage.src;
   imageTitle.textContent = initialImage.alt;
   image.alt = initialImage.alt;
-  overlay.classList.add('overlay_make-color_dark');
+  popupImage.classList.add('popup_make-color_dark');
   openPopup (popupImage);
 }
 
@@ -115,44 +106,34 @@ function submitForm (evt) {
   if (popupProfile.classList.contains('popup_open')) {
     addValue (nameInput, nameOutput);
     addValue (jobInput, jobOutput);
-    setTimeout(()=>{
-      popupProfile.classList.remove('popup_open');
-    }, 500);
+    popupProfile.classList.remove('popup_open');
   }
   // Вставить картинку
   if (popupElement.classList.contains('popup_open')) {
     elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value));
-    setTimeout(()=>{
-      popupElement.classList.remove('popup_open');
-    }, 500);
+    popupElement.classList.remove('popup_open');
   }
-
-  toggleOverlay ();
 }
 
 // Слушать
 profileEditButton.addEventListener('click', openPopupProfile);
 elementAddButton.addEventListener('click', openPopupElement);
-formCloseButton.forEach((c) => c.addEventListener('click', closePopup))
-overlay.addEventListener('submit', submitForm);
+formCloseButton.forEach((c) => c.addEventListener('click', closePopup));
+popups.forEach((c) => c.addEventListener('submit', submitForm));
 
 // Отказаться
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    if (overlay.classList.contains('overlay_open')) {
-      toggleOverlay();
-    }
-    setTimeout(()=>{
-      if (popupProfile.classList.contains('popup_open')) {
-        popupProfile.classList.remove('popup_open');
-      }
-      if (popupElement.classList.contains('popup_open')) {
-        popupElement.classList.remove('popup_open');
-      }
-      if (popupImage.classList.contains('popup_open')) {
-        popupImage.classList.remove('popup_open');
-        overlay.classList.remove('overlay_make-color_dark');
-      }
-    }, 500);
-  }
-});
+// document.addEventListener('keydown', (evt) => {
+//   if (evt.key === 'Escape') {
+
+//     if (popupProfile.classList.contains('popup_open')) {
+//       popupProfile.classList.remove('popup_open');
+//     }
+//     if (popupElement.classList.contains('popup_open')) {
+//       popupElement.classList.remove('popup_open');
+//     }
+//     if (popupImage.classList.contains('popup_open')) {
+//       popupImage.classList.remove('popup_open');
+//       popupImage.classList.remove('popup_make-color_dark');
+//     }
+//   }
+// });
