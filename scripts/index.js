@@ -1,5 +1,4 @@
 // Ссылки на оверлей
-const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('#popup-profile');
 const popupElement = document.querySelector('#popup-element');
 const popupImage = document.querySelector('#popup-image');
@@ -9,7 +8,7 @@ const nameInput = popupProfile.querySelector('[name="title"]');
 const jobInput = popupProfile.querySelector('[name="subtitle"]');
 const nameElementInput = popupElement.querySelector('[name="name"]');
 const linkElementInput = popupElement.querySelector('[name="link"]');
-const formCloseButton = document.querySelectorAll('.popup__close-button');
+const formCloseButtons = document.querySelectorAll('.popup__close-button');
 // Ссылки на профиль
 const blockOutput = document.querySelector('.profile');
 const profileEditButton = blockOutput.querySelector('.profile__edit-button');
@@ -36,13 +35,9 @@ function openPopup (pop) {
   pop.classList.add('popup_open');
 }
 
-// Закрыть попап крестиком
-function closePopup (evt) {
-  const targetPopup = evt.target.closest('.popup');
-  targetPopup.classList.remove('popup_open');
-  if (targetPopup.classList.contains('popup_type_image')) {
-    popupImage.classList.remove('popup_make-color_dark');
-  }
+// Закрыть попап
+function closePopup (pop) {
+  pop.classList.remove('popup_open');
 }
 
 // Открыть попапы
@@ -52,16 +47,11 @@ function openPopupProfile () {
   openPopup (popupProfile)
 }
 
-function openPopupElement () {
-  openPopup (popupElement)
-}
-
 function openPopupImage (evt) {
   const initialImage = evt.target;
   image.src = initialImage.src;
   imageTitle.textContent = initialImage.alt;
   image.alt = initialImage.alt;
-  popupImage.classList.add('popup_make-color_dark');
   openPopup (popupImage);
 }
 
@@ -83,8 +73,9 @@ initialCards.forEach ( (item) => {
 // Вставить картинку
 function cloneFormElement(name, link) {
   const elementsPhoto = elementTemplate.querySelector('.elements__photo').cloneNode(true);
-  elementsPhoto.querySelector('.elements__image').src = link;
-  elementsPhoto.querySelector('.elements__image').alt = name;
+  const elementsImage = elementsPhoto.querySelector('.elements__image')
+  elementsImage.src = link;
+  elementsImage.alt = name;
   elementsPhoto.querySelector('.elements__title').textContent = name;
   // Лайкать картинки
   const elementsLikeButton = elementsPhoto.querySelector('.elements__like-button');
@@ -93,33 +84,30 @@ function cloneFormElement(name, link) {
   const elementsTrashButton = elementsPhoto.querySelector('.elements__delete-button');
   elementsTrashButton.addEventListener('click', deleteButton);
   // Просматривать картинки
-  const elementsImage = elementsPhoto.querySelector('.elements__image');
   elementsImage.addEventListener('click', openPopupImage);
 
   return elementsPhoto
 }
 
 // Согласиться
-function submitForm (evt) {
+function submitProfile (evt) {
   evt.preventDefault();
-  // Редактировать профиль
-  if (popupProfile.classList.contains('popup_open')) {
-    addValue (nameInput, nameOutput);
-    addValue (jobInput, jobOutput);
-    popupProfile.classList.remove('popup_open');
-  }
-  // Вставить картинку
-  if (popupElement.classList.contains('popup_open')) {
-    elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value));
-    popupElement.classList.remove('popup_open');
-  }
+  addValue (nameInput, nameOutput);
+  addValue (jobInput, jobOutput);
+  closePopup (popupProfile);
+}
+function submitElement (evt) {
+  evt.preventDefault();
+  elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value));
+  closePopup (popupElement);
 }
 
 // Слушать
 profileEditButton.addEventListener('click', openPopupProfile);
-elementAddButton.addEventListener('click', openPopupElement);
-formCloseButton.forEach((c) => c.addEventListener('click', closePopup));
-popups.forEach((c) => c.addEventListener('submit', submitForm));
+elementAddButton.addEventListener('click',() => openPopup (popupElement));
+formCloseButtons.forEach((c) => c.addEventListener('click',() => closePopup(c.closest('.popup'))));
+popupProfile.addEventListener('submit', submitProfile);
+popupElement.addEventListener('submit', submitElement);
 
 // Отказаться
 // document.addEventListener('keydown', (evt) => {
@@ -133,7 +121,6 @@ popups.forEach((c) => c.addEventListener('submit', submitForm));
 //     }
 //     if (popupImage.classList.contains('popup_open')) {
 //       popupImage.classList.remove('popup_open');
-//       popupImage.classList.remove('popup_make-color_dark');
 //     }
 //   }
 // });
