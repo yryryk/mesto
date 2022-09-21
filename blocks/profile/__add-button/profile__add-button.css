@@ -14,7 +14,7 @@
   border-radius: 2px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 425px) {
   .profile__add-button {
     width: 100%;
     background-size: calc(((100vw - 320px) / (767 - 320)) * (22 - 16) + 16px);

@@ -69,6 +69,7 @@ function openPopupImage (evt) {
   const initialImage = evt.target;
   image.src = initialImage.src;
   imageTitle.textContent = initialImage.alt;
+  image.alt = initialImage.alt;
   overlay.classList.add('overlay_make-color_dark');
   openPopup (popupImage);
 }
