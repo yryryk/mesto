@@ -9,6 +9,7 @@ const jobInput = popupProfile.querySelector('[name="subtitle"]');
 const nameElementInput = popupElement.querySelector('[name="name"]');
 const linkElementInput = popupElement.querySelector('[name="link"]');
 const formCloseButtons = document.querySelectorAll('.popup__close-button');
+const popups = document.querySelectorAll('.popup');
 // Ссылки на профиль
 const blockOutput = document.querySelector('.profile');
 const profileEditButton = blockOutput.querySelector('.profile__edit-button');
@@ -192,7 +193,13 @@ function toggleButtonState (inputList, buttonElement) {
 enableValidation ();
 
 
-
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target === popup){
+      closePopup (popup)
+    }
+  });
+});
 
 
 document.addEventListener('keydown', (evt) => {
