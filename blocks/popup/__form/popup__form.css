@@ -5,10 +5,6 @@
 
 @media (max-width: 767px) {
   .popup__form {
-    margin-top: 69px;
+    margin-top: 68px;
   }
-}
-
-.popup__form :first-child{
-  margin-bottom: 25px;
 }

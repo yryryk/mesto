@@ -11,7 +11,7 @@
 }
 
 @media (max-width: 767px) {
-  .popup_type_setter {
+  .popup__window {
     width: 282px;
     padding: 26px 22px 25px;
   }

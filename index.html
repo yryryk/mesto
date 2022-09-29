@@ -53,9 +53,15 @@
     <div class="popup__window">
       <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="form">
-        <input type="text" name="title" class="input" value="">
-        <input type="text" name="subtitle" class="input" value="">
+      <form class="popup__form" name="form" novalidate>
+        <label class="popup__field">
+          <input id="title-input" type="text" name="title" class="input" value="" minlength="2" maxlength="40" required>
+          <span class="title-input-error popup__input-error"></span>
+        </label>
+        <label class="popup__field">
+          <input id="subtitle-input" type="text" name="subtitle" class="input" value="" minlength="2" maxlength="200" required>
+          <span class="subtitle-input-error popup__input-error"></span>
+        </label>
         <button aria-label="submit" type="submit" class="popup__submit-button">Сохранить</button>
       </form>
     </div>
@@ -64,9 +70,15 @@
     <div class="popup__window">
       <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form class="popup__form" name="form">
-        <input type="text" name="name" class="input" placeholder="Новое место">
-        <input type="text" name="link" class="input" placeholder="Ссылка на картинку">
+      <form class="popup__form" name="form" novalidate>
+        <label class="popup__field">
+          <input id="text-input" type="text" name="name" class="input" placeholder="Название" minlength="2" maxlength="30" required>
+          <span class="text-input-error popup__input-error"></span>
+        </label>
+        <label class="popup__field">
+          <input id="link-input" name="link" class="input" placeholder="Ссылка на картинку" type="url" required>
+          <span class="link-input-error popup__input-error"></span>
+        </label>
         <button aria-label="submit" type="submit" class="popup__submit-button">Создать</button>
       </form>
     </div>

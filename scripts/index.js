@@ -1,4 +1,4 @@
-// Ссылки на оверлей
+// Ссылки на попап
 const popupProfile = document.querySelector('#popup-profile');
 const popupElement = document.querySelector('#popup-element');
 const popupImage = document.querySelector('#popup-image');
@@ -44,7 +44,7 @@ function closePopup (pop) {
 function openPopupProfile () {
   getValue (nameInput, nameOutput);
   getValue (jobInput, jobOutput);
-  openPopup (popupProfile)
+  openPopup (popupProfile);
 }
 
 function openPopupImage (evt) {
@@ -109,18 +109,78 @@ formCloseButtons.forEach((c) => c.addEventListener('click',() => closePopup(c.cl
 popupProfile.addEventListener('submit', submitProfile);
 popupElement.addEventListener('submit', submitElement);
 
-// Отказаться
-// document.addEventListener('keydown', (evt) => {
-//   if (evt.key === 'Escape') {
 
-//     if (popupProfile.classList.contains('popup_open')) {
-//       popupProfile.classList.remove('popup_open');
+
+
+
+
+
+function showInputError (formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('input_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__input-error_active');
+};
+
+function hideInputError (formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('input_type_error');
+  errorElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
+};
+
+function checkInputValidity (formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+function setEventListeners (formElement) {
+  const inputList = Array.from(formElement.querySelectorAll('.input'));
+  const buttonElement = formElement.querySelector('.popup__submit-button');
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+function enableValidation () {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    setEventListeners(formElement);
+  });
+};
+
+function hasInvalidInput (inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+};
+
+function toggleButtonState (inputList, buttonElement) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__submit-button_inactive');
+    buttonElement.setAttribute('disabled', true);
+  } else {
+    buttonElement.classList.remove('popup__submit-button_inactive');
+    buttonElement.removeAttribute('disabled');
+  }
+};
+
+enableValidation ();
+
+
+
+// function closePopupEsc (pop) {
+//   document.addEventListener('keydown', (evt) => {
+//     if (evt.key === 'Escape') {
+//       pop.classList.remove('popup_open');
 //     }
-//     if (popupElement.classList.contains('popup_open')) {
-//       popupElement.classList.remove('popup_open');
-//     }
-//     if (popupImage.classList.contains('popup_open')) {
-//       popupImage.classList.remove('popup_open');
-//     }
-//   }
-// });
+//   });
+// }
