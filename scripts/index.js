@@ -45,6 +45,12 @@ function openPopupProfile () {
   getValue (nameInput, nameOutput);
   getValue (jobInput, jobOutput);
   openPopup (popupProfile);
+  disableButton (popupProfile.querySelector('.popup__submit-button'))
+}
+
+function openPopupElement () {
+  openPopup (popupElement);
+  disableButton (popupElement.querySelector('.popup__submit-button'))
 }
 
 function openPopupImage (evt) {
@@ -95,16 +101,18 @@ function submitProfile (evt) {
   addValue (nameInput, nameOutput);
   addValue (jobInput, jobOutput);
   closePopup (popupProfile);
+  document.forms.profile.reset();
 }
 function submitElement (evt) {
   evt.preventDefault();
   elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value));
   closePopup (popupElement);
+  document.forms.element.reset();
 }
 
 // Слушать
 profileEditButton.addEventListener('click', openPopupProfile);
-elementAddButton.addEventListener('click',() => openPopup (popupElement));
+elementAddButton.addEventListener('click',openPopupElement);
 formCloseButtons.forEach((c) => c.addEventListener('click',() => closePopup(c.closest('.popup'))));
 popupProfile.addEventListener('submit', submitProfile);
 popupElement.addEventListener('submit', submitElement);
@@ -163,13 +171,21 @@ function hasInvalidInput (inputList) {
   })
 };
 
+function disableButton (buttonElement) {
+  buttonElement.classList.add('popup__submit-button_inactive');
+  buttonElement.setAttribute('disabled', true);
+};
+
+function enableButton (buttonElement) {
+  buttonElement.classList.remove('popup__submit-button_inactive');
+  buttonElement.removeAttribute('disabled');
+};
+
 function toggleButtonState (inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__submit-button_inactive');
-    buttonElement.setAttribute('disabled', true);
+    disableButton (buttonElement)
   } else {
-    buttonElement.classList.remove('popup__submit-button_inactive');
-    buttonElement.removeAttribute('disabled');
+    enableButton (buttonElement)
   }
 };
 
@@ -177,10 +193,10 @@ enableValidation ();
 
 
 
-// function closePopupEsc (pop) {
-//   document.addEventListener('keydown', (evt) => {
-//     if (evt.key === 'Escape') {
-//       pop.classList.remove('popup_open');
-//     }
-//   });
-// }
+
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    popupProfile.classList.remove('popup_open')||popupElement.classList.remove('popup_open')||popupImage.classList.remove('popup_open');
+  }
+});
