@@ -118,23 +118,18 @@ formCloseButtons.forEach((c) => c.addEventListener('click',() => closePopup(c.cl
 popupProfile.addEventListener('submit', submitProfile);
 popupElement.addEventListener('submit', submitElement);
 
-
-
-
-
-
-
+// Валидация
 function showInputError (formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('input_type_error');
+  inputElement.classList.add(selectors.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('popup__input-error_active');
+  errorElement.classList.add(selectors.errorClass);
 };
 
 function hideInputError (formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('input_type_error');
-  errorElement.classList.remove('popup__input-error_active');
+  inputElement.classList.remove(selectors.inputErrorClass);
+  errorElement.classList.remove(selectors.errorClass);
   errorElement.textContent = '';
 };
 
@@ -147,8 +142,8 @@ function checkInputValidity (formElement, inputElement) {
 };
 
 function setEventListeners (formElement) {
-  const inputList = Array.from(formElement.querySelectorAll('.input'));
-  const buttonElement = formElement.querySelector('.popup__submit-button');
+  const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
+  const buttonElement = formElement.querySelector(selectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
 
   inputList.forEach((inputElement) => {
@@ -159,8 +154,8 @@ function setEventListeners (formElement) {
   });
 };
 
-function enableValidation () {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
+function enableValidation (selectors) {
+  const formList = Array.from(document.querySelectorAll(selectors.formSelector));
   formList.forEach((formElement) => {
     setEventListeners(formElement);
   });
@@ -173,12 +168,12 @@ function hasInvalidInput (inputList) {
 };
 
 function disableButton (buttonElement) {
-  buttonElement.classList.add('popup__submit-button_inactive');
+  buttonElement.classList.add(selectors.inactiveButtonClass);
   buttonElement.setAttribute('disabled', true);
 };
 
 function enableButton (buttonElement) {
-  buttonElement.classList.remove('popup__submit-button_inactive');
+  buttonElement.classList.remove(selectors.inactiveButtonClass);
   buttonElement.removeAttribute('disabled');
 };
 
@@ -190,9 +185,9 @@ function toggleButtonState (inputList, buttonElement) {
   }
 };
 
-enableValidation ();
+enableValidation (selectors);
 
-
+// Выключение попапов
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target === popup){
@@ -204,6 +199,6 @@ popups.forEach((popup) => {
 
 document.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape') {
-    popupProfile.classList.remove('popup_open')||popupElement.classList.remove('popup_open')||popupImage.classList.remove('popup_open');
+    closePopup (popupProfile)||closePopup (popupElement)||closePopup (popupImage);
   }
 });
