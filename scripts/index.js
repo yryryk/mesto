@@ -48,12 +48,12 @@ function openPopupProfile () {
   getValue (nameInput, nameOutput);
   getValue (jobInput, jobOutput);
   openPopup (popupProfile);
-  disableButton (popupProfile.querySelector('.popup__submit-button'))
+  disableButton (popupProfile.querySelector('.popup__submit-button'), selectors)
 }
 
 function openPopupElement () {
   openPopup (popupElement);
-  disableButton (popupElement.querySelector('.popup__submit-button'))
+  disableButton (popupElement.querySelector('.popup__submit-button'), selectors)
 }
 
 function openPopupImage (evt) {

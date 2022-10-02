@@ -7,14 +7,14 @@ const selectors = {
   errorClass: 'popup__input-error_active'
 };
 
-function showInputError (formElement, inputElement, errorMessage) {
+function showInputError (formElement, inputElement, errorMessage, selectors) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(selectors.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(selectors.errorClass);
 };
 
-function hideInputError (formElement, inputElement) {
+function hideInputError (formElement, inputElement, selectors) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(selectors.inputErrorClass);
   errorElement.classList.remove(selectors.errorClass);
@@ -23,13 +23,13 @@ function hideInputError (formElement, inputElement) {
 
 function checkInputValidity (formElement, inputElement) {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, selectors);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, selectors);
   }
 };
 
-function setEventListeners (formElement) {
+function setEventListeners (formElement, selectors) {
   const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
   const buttonElement = formElement.querySelector(selectors.submitButtonSelector);
   toggleButtonState(inputList, buttonElement);
@@ -45,7 +45,7 @@ function setEventListeners (formElement) {
 function enableValidation (selectors) {
   const formList = Array.from(document.querySelectorAll(selectors.formSelector));
   formList.forEach((formElement) => {
-    setEventListeners(formElement);
+    setEventListeners(formElement, selectors);
   });
 };
 
@@ -55,21 +55,21 @@ function hasInvalidInput (inputList) {
   })
 };
 
-function disableButton (buttonElement) {
+function disableButton (buttonElement, selectors) {
   buttonElement.classList.add(selectors.inactiveButtonClass);
   buttonElement.setAttribute('disabled', true);
 };
 
-function enableButton (buttonElement) {
+function enableButton (buttonElement, selectors) {
   buttonElement.classList.remove(selectors.inactiveButtonClass);
   buttonElement.removeAttribute('disabled');
 };
 
 function toggleButtonState (inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
-    disableButton (buttonElement)
+    disableButton (buttonElement, selectors)
   } else {
-    enableButton (buttonElement)
+    enableButton (buttonElement, selectors)
   }
 };
 
