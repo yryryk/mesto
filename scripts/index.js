@@ -54,47 +54,10 @@ function openPopupElement () {
   disableButton (popupElement.querySelector('.popup__submit-button'))
 }
 
-function openPopupImage (evt) {
-  const initialImage = evt.target;
-  image.src = initialImage.src;
-  imageTitle.textContent = initialImage.alt;
-  image.alt = initialImage.alt;
-  openPopup (popupImage);
-}
-
-// Лайкать картинки
-function likeButton(evt) {
-  evt.target.classList.toggle('elements__like-button_active')
-}
-
-// Удалять картинки
-function deleteButton(evt) {
-  evt.target.closest('.elements__photo').remove();
-}
-
 // Загрузить начальные картинки
 initialCards.forEach ( (item) => {
-  elements.append(cloneFormElement(item.name, item.link))
+  elements.append(new Card(item, '#element').generateCard())
 })
-
-// Вставить картинку
-function cloneFormElement(name, link) {
-  const elementsPhoto = elementTemplate.querySelector('.elements__photo').cloneNode(true);
-  const elementsImage = elementsPhoto.querySelector('.elements__image')
-  elementsImage.src = link;
-  elementsImage.alt = name;
-  elementsPhoto.querySelector('.elements__title').textContent = name;
-  // Лайкать картинки
-  const elementsLikeButton = elementsPhoto.querySelector('.elements__like-button');
-  elementsLikeButton.addEventListener('click', likeButton);
-  // Удалять картинки
-  const elementsTrashButton = elementsPhoto.querySelector('.elements__delete-button');
-  elementsTrashButton.addEventListener('click', deleteButton);
-  // Просматривать картинки
-  elementsImage.addEventListener('click', openPopupImage);
-
-  return elementsPhoto
-}
 
 // Согласиться
 function submitProfile (evt) {
@@ -106,7 +69,11 @@ function submitProfile (evt) {
 }
 function submitElement (evt) {
   evt.preventDefault();
-  elements.prepend(cloneFormElement(nameElementInput.value, linkElementInput.value));
+  const elementInputItem = {
+    name: nameElementInput.value,
+    link: linkElementInput.value,
+  }
+  elements.prepend(new Card(elementInputItem, '#element').generateCard());
   closePopup (popupElement);
   document.forms.element.reset();
 }
