@@ -18,9 +18,9 @@ class Card {
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
-
-    this._element.querySelector('.elements__image').src = this._link;
-    this._element.querySelector('.elements__image').alt = this._name;
+    this._image = this._element.querySelector('.elements__image');
+    this._image.src = this._link;
+    this._image.alt = this._name;
     this._element.querySelector('.elements__title').textContent = this._name;
 
     return this._element;
@@ -44,9 +44,10 @@ class Card {
 
   // Открыть попап просмотра картинок
   _openPopupImage () {
-    image.src = this._element.querySelector('.elements__image').src;
-    imageTitle.textContent = this._element.querySelector('.elements__image').alt;
-    image.alt = this._element.querySelector('.elements__image').alt;
+    image.src = this._link;
+    imageTitle.textContent = this._name;
+    image.alt = this._name;
     openPopup (popupImage);
   }
 }
+
