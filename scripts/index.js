@@ -5,6 +5,8 @@ import FormValidator from './validate.js';
 const popupProfile = document.querySelector('#popup-profile');
 const popupElement = document.querySelector('#popup-element');
 const popupImage = document.querySelector('#popup-image');
+const image = popupImage.querySelector('.popup__image');
+const imageTitle = popupImage.querySelector('.popup__image-title');
 const nameInput = popupProfile.querySelector('[name="title"]');
 const jobInput = popupProfile.querySelector('[name="subtitle"]');
 const nameElementInput = popupElement.querySelector('[name="name"]');
@@ -12,15 +14,15 @@ const linkElementInput = popupElement.querySelector('[name="link"]');
 const formCloseButtons = document.querySelectorAll('.popup__close-button');
 const popups = document.querySelectorAll('.popup');
 // Ссылки на профиль
-const blockOutput = document.querySelector('.profile');
-const profileEditButton = blockOutput.querySelector('.profile__edit-button');
-const nameOutput = blockOutput.querySelector('.profile__title');
-const jobOutput = blockOutput.querySelector('.profile__subtitle');
-const elementAddButton = blockOutput.querySelector('.profile__add-button');
+const profile = document.querySelector('.profile');
+const profileEditButton = profile.querySelector('.profile__edit-button');
+const nameOutput = profile.querySelector('.profile__title');
+const jobOutput = profile.querySelector('.profile__subtitle');
+const elementAddButton = profile.querySelector('.profile__add-button');
 // Другие ссылки
 const elements = document.querySelector('.elements');
 // Объект настройки валидации
-const selectors = {
+const validationSettings = {
   formSelector: '.popup__form',
   inputSelector: '.input',
   submitButtonSelector: '.popup__submit-button',
@@ -59,7 +61,7 @@ const initialCards = [
 // Функции
 
 // Соединить инпуты попапа с профилем
-function getValue (input, output) {
+function setInoutValueFromText (input, output) {
   input.value = output.textContent;
 }
 
@@ -81,31 +83,38 @@ function closePopup (pop) {
 
 // Создаём объект и автоматически наполняем его экземплярами класса FormValidator
 // с именами ключей соответствующими валидируемой форме
-let formValidatorsObject = {};
-const formList = Array.from(document.querySelectorAll(selectors.formSelector));
+const formValidatorsObject = {};
+const formList = Array.from(document.querySelectorAll(validationSettings.formSelector));
 formList.forEach((formElement) => {
-  let formElementObject = new FormValidator(selectors, formElement);
-  formValidatorsObject[formElementObject.name] = formElementObject;
+  const formValidatorObject = new FormValidator(validationSettings, formElement);
+  formValidatorObject.enableValidation();
+  formValidatorsObject[formElement.getAttribute('name')] = formValidatorObject;
 });
 
 // Открыть попапы
 function openPopupProfile () {
-  getValue (nameInput, nameOutput);
-  getValue (jobInput, jobOutput);
+  setInoutValueFromText (nameInput, nameOutput);
+  setInoutValueFromText (jobInput, jobOutput);
   openPopup (popupProfile);
-  // Инициируем валидацию для формы профиля
-  formValidatorsObject.profile.enableValidation();
+  formValidatorsObject.profile.refreshValidation ();
 }
 
 function openPopupElement () {
+  document.forms.element.reset();
   openPopup (popupElement);
-  // Инициируем валидацию для формы картинок
-  formValidatorsObject.element.enableValidation();
+  formValidatorsObject.element.refreshValidation ();
+}
+
+function openPopupImage (initialImage, initialName) {
+  image.src = initialImage;
+  image.alt = initialName;
+  imageTitle.textContent = initialName;
+  openPopup (popupImage);
 }
 
 // Загрузить начальные картинки
 initialCards.forEach ( (item) => {
-  elements.append(new Card(item, '#element').generateCard())
+  elements.append(new Card(item, '#element', openPopupImage).generateCard())
 })
 
 // Согласиться
@@ -122,7 +131,7 @@ function submitElement (evt) {
     name: nameElementInput.value,
     link: linkElementInput.value,
   }
-  elements.prepend(new Card(elementInputItem, '#element').generateCard());
+  elements.prepend(new Card(elementInputItem, '#element', openPopupImage).generateCard());
   closePopup (popupElement);
   document.forms.element.reset();
 }
@@ -145,8 +154,8 @@ popups.forEach((popup) => {
 
 function closeByEsc (evt) {
   if (evt.key === 'Escape') {
-    const popupOpen = document.querySelector('.popup_open');
-    closePopup (popupOpen);
+    const openedPopup = document.querySelector('.popup_open');
+    closePopup (openedPopup);
   }
 }
 

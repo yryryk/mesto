@@ -23,11 +23,11 @@
         <div class="profile__user-picture"></div>
         <div class="profile__user-info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
-          <button aria-label="edit" type="button" class="button-opacity profile__edit-button"></button>
+          <button aria-label="кнопка редактировать" type="button" class="button-opacity profile__edit-button"></button>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
       </div>
-      <button aria-label="add" type="button" class="button-opacity profile__add-button"></button>
+      <button aria-label="кнопка добавить" type="button" class="button-opacity profile__add-button"></button>
     </section>
 
     <section class="elements" aria-label="Секция с картинками">
@@ -43,32 +43,32 @@
       <img class="elements__image" src="#" alt="">
       <div class="elements__paraphernalia">
         <h2 class="elements__title"></h2>
-        <button aria-label="like" type="button" class="elements__like-button"></button>
-        <button aria-label="close" type="button" class="button-opacity elements__delete-button"></button>
+        <button aria-label="поставить лайк" type="button" class="elements__like-button"></button>
+        <button aria-label="кнопка закрытия" type="button" class="button-opacity elements__delete-button"></button>
       </div>
     </div>
   </template>
 
   <div class="popup popup_type_setter" id="popup-profile">
     <div class="popup__window">
-      <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
+      <button aria-label="кнопка закрытия" type="button" class="button-opacity popup__close-button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="profile" novalidate>
         <label class="popup__field">
-          <input id="title-input" type="text" name="title" class="input" value="" minlength="2" maxlength="40" required>
+          <input id="title-input" type="text" name="title" class="input" placeholder="Имя" value="" minlength="2" maxlength="40" required>
           <span class="title-input-error popup__input-error"></span>
         </label>
         <label class="popup__field">
-          <input id="subtitle-input" type="text" name="subtitle" class="input" value="" minlength="2" maxlength="200" required>
+          <input id="subtitle-input" type="text" name="subtitle" class="input" placeholder="Фамилия" value="" minlength="2" maxlength="200" required>
           <span class="subtitle-input-error popup__input-error"></span>
         </label>
-        <button aria-label="submit" type="submit" class="popup__submit-button">Сохранить</button>
+        <button aria-label="кнопка сохранить" type="submit" class="popup__submit-button">Сохранить</button>
       </form>
     </div>
   </div>
   <div class="popup popup_type_setter" id="popup-element">
     <div class="popup__window">
-      <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
+      <button aria-label="кнопка закрытия" type="button" class="button-opacity popup__close-button"></button>
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" name="element" novalidate>
         <label class="popup__field">
@@ -79,20 +79,18 @@
           <input id="link-input" name="link" class="input" placeholder="Ссылка на картинку" type="url" required>
           <span class="link-input-error popup__input-error"></span>
         </label>
-        <button aria-label="submit" type="submit" class="popup__submit-button">Создать</button>
+        <button aria-label="кнопка сохранить" type="submit" class="popup__submit-button">Создать</button>
       </form>
     </div>
   </div>
   <div class="popup popup_type_image popup_make-color_dark" id="popup-image">
     <div class="popup__image-window">
-      <button aria-label="close" type="button" class="button-opacity popup__close-button"></button>
+      <button aria-label="кнопка закрытия" type="button" class="button-opacity popup__close-button"></button>
       <img class="popup__image" src="#" alt="">
       <h2 class="popup__image-title">Карачаево-Черкессия</h2>
     </div>
   </div>
   <script type="module" src="scripts/index.js"></script>
-  <script type="module" src="scripts/validate.js"></script>
-  <script type="module" src="scripts/Card.js"></script>
 </body>
 
 </html>

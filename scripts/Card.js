@@ -1,8 +1,9 @@
 export default class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, openPopupImage) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._openPopupImage = openPopupImage;
   }
 
   _getTemplate() {
@@ -17,11 +18,11 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    this._setEventListeners();
+    this._element.querySelector('.elements__title').textContent = this._name;
     this._image = this._element.querySelector('.elements__image');
     this._image.src = this._link;
     this._image.alt = this._name;
-    this._element.querySelector('.elements__title').textContent = this._name;
+    this._setEventListeners();
 
     return this._element;
   }
@@ -37,17 +38,9 @@ export default class Card {
       this._element.remove();
     });
     // Просматривать картинки
-    this._element.querySelector('.elements__image').addEventListener('click', () => {
-      this._openPopupImage();
+    this._image.addEventListener('click', () => {
+      this._openPopupImage(this._link, this._name);
     });
-  }
-
-  // Открыть попап просмотра картинок
-  _openPopupImage () {
-    image.src = this._link;
-    imageTitle.textContent = this._name;
-    image.alt = this._name;
-    openPopup (popupImage);
   }
 }
 

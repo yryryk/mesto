@@ -1,22 +1,29 @@
 export default class FormValidator {
 
-  constructor(selectors, formElement) {
-    this._selectors = selectors;
+  constructor(validationSettings, formElement) {
+    this._validationSettings = validationSettings;
     this._formElement = formElement;
-    this.name = this._formElement.attributes.name.value; // Для автоматического создания ключей объекта
-    //                                                      с экземплярами класса FormValidator в index.js
   }
 
   enableValidation () {
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._selectors.inputSelector));
-    this._buttonElement = this._formElement.querySelector(this._selectors.submitButtonSelector);
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._validationSettings.inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._validationSettings.submitButtonSelector);
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        this._checkInputValidity(inputElement);
+        this._toggleInputErrorState(inputElement);
         this._toggleButtonState();
       });
+    });
+  };
+
+  refreshValidation () {
+    this._inputList.forEach((inputElement) => {
+      // Определить состояние полей ввода при повторном открытии попапа
+      this._toggleInputErrorState(inputElement);
+      // Определить состояние кнопки при повторном открытии попапа после сабмита при предыдущем открытии
+      this._toggleButtonState();
     });
   };
 
@@ -29,12 +36,12 @@ export default class FormValidator {
   };
 
   _disableButton () {
-    this._buttonElement.classList.add(this._selectors.inactiveButtonClass);
+    this._buttonElement.classList.add(this._validationSettings.inactiveButtonClass);
     this._buttonElement.setAttribute('disabled', true);
   };
 
   _enableButton () {
-    this._buttonElement.classList.remove(this._selectors.inactiveButtonClass);
+    this._buttonElement.classList.remove(this._validationSettings.inactiveButtonClass);
     this._buttonElement.removeAttribute('disabled');
   };
 
@@ -44,7 +51,7 @@ export default class FormValidator {
     })
   };
 
-  _checkInputValidity (inputElement) {
+  _toggleInputErrorState (inputElement) {
     this._errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement, inputElement.validationMessage);
@@ -54,14 +61,14 @@ export default class FormValidator {
   };
 
   _showInputError (inputElement, errorMessage) {
-    inputElement.classList.add(this._selectors.inputErrorClass);
+    inputElement.classList.add(this._validationSettings.inputErrorClass);
     this._errorElement.textContent = errorMessage;
-    this._errorElement.classList.add(this._selectors.errorClass);
+    this._errorElement.classList.add(this._validationSettings.errorClass);
   };
 
   _hideInputError (inputElement) {
-    inputElement.classList.remove(this._selectors.inputErrorClass);
-    this._errorElement.classList.remove(this._selectors.errorClass);
+    inputElement.classList.remove(this._validationSettings.inputErrorClass);
+    this._errorElement.classList.remove(this._validationSettings.errorClass);
     this._errorElement.textContent = '';
   };
 
