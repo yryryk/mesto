@@ -61,11 +61,11 @@ const initialCards = [
 // Функции
 
 // Соединить инпуты попапа с профилем
-function setInoutValueFromText (input, output) {
+function setInputValueFromText (input, output) {
   input.value = output.textContent;
 }
 
-function addValue (input, output) {
+function setTextValueFromInput (input, output) {
   output.textContent = input.value;
 }
 
@@ -93,8 +93,8 @@ formList.forEach((formElement) => {
 
 // Открыть попапы
 function openPopupProfile () {
-  setInoutValueFromText (nameInput, nameOutput);
-  setInoutValueFromText (jobInput, jobOutput);
+  setInputValueFromText (nameInput, nameOutput);
+  setInputValueFromText (jobInput, jobOutput);
   openPopup (popupProfile);
   formValidatorsObject.profile.refreshValidation ();
 }
@@ -120,8 +120,8 @@ initialCards.forEach ( (item) => {
 // Согласиться
 function submitProfile (evt) {
   evt.preventDefault();
-  addValue (nameInput, nameOutput);
-  addValue (jobInput, jobOutput);
+  setTextValueFromInput (nameInput, nameOutput);
+  setTextValueFromInput (jobInput, jobOutput);
   closePopup (popupProfile);
   document.forms.profile.reset();
 }
