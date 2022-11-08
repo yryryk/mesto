@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "learning project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yryryk/mesto.git"
+  },
+  "author": "Tovchennikov Alexander",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yryryk/mesto/issues"
+  },
+  "homepage": "https://github.com/yryryk/mesto#readme"
+}

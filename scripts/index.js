@@ -1,5 +1,6 @@
 import Card from './Card.js';
-import FormValidator from './validate.js';
+import FormValidator from './Validate.js';
+import Section from './Section.js';
 
 // Ссылки на попап
 const popupProfile = document.querySelector('#popup-profile');
@@ -113,9 +114,14 @@ function openPopupImage (initialImage, initialName) {
 }
 
 // Загрузить начальные картинки
-initialCards.forEach ( (item) => {
-  elements.append(new Card(item, '#element', openPopupImage).generateCard())
-})
+const cardList = new Section({
+  items: initialCards.reverse(),
+  renderer: (item) => {
+    cardList.addItem(new Card(item, '#element', openPopupImage).generateCard());
+  }
+}, '.elements');
+
+cardList.renderItems();
 
 // Согласиться
 function submitProfile (evt) {
@@ -131,7 +137,7 @@ function submitElement (evt) {
     name: nameElementInput.value,
     link: linkElementInput.value,
   }
-  elements.prepend(new Card(elementInputItem, '#element', openPopupImage).generateCard());
+  cardList.addItem(new Card(elementInputItem, '#element', openPopupImage).generateCard());
   closePopup (popupElement);
   document.forms.element.reset();
 }
