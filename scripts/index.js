@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './Validate.js';
 import Section from './Section.js';
+import PopupWithImage from './PopupWithImage.js';
 
 // Ссылки на попап
 const popupProfile = document.querySelector('#popup-profile');
@@ -58,6 +59,8 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+const popupWithImage = new PopupWithImage ('#popup-image');
 
 // Функции
 
@@ -117,7 +120,9 @@ function openPopupImage (initialImage, initialName) {
 const cardList = new Section({
   items: initialCards.reverse(),
   renderer: (item) => {
-    cardList.addItem(new Card(item, '#element', openPopupImage).generateCard());
+    cardList.addItem(new Card(item, '#element', (initialImage, initialName) => {
+      popupWithImage.open(initialImage, initialName)
+    }).generateCard());
   }
 }, '.elements');
 
@@ -137,7 +142,9 @@ function submitElement (evt) {
     name: nameElementInput.value,
     link: linkElementInput.value,
   }
-  cardList.addItem(new Card(elementInputItem, '#element', openPopupImage).generateCard());
+  cardList.addItem(new Card(elementInputItem, '#element', (initialImage, initialName) => {
+    popupWithImage.open(initialImage, initialName)
+  }).generateCard());
   closePopup (popupElement);
   document.forms.element.reset();
 }
@@ -145,25 +152,25 @@ function submitElement (evt) {
 // Слушать
 profileEditButton.addEventListener('click', openPopupProfile);
 elementAddButton.addEventListener('click',openPopupElement);
-formCloseButtons.forEach((c) => c.addEventListener('click',() => closePopup(c.closest('.popup'))));
+// formCloseButtons.forEach((c) => c.addEventListener('click',() => closePopup(c.closest('.popup'))));
 popupProfile.addEventListener('submit', submitProfile);
 popupElement.addEventListener('submit', submitElement);
 
 // Выключение попапов
-popups.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {
-    if (evt.target === popup){
-      closePopup (popup)
-    }
-  });
-});
+// popups.forEach((popup) => {
+//   popup.addEventListener('click', (evt) => {
+//     if (evt.target === popup){
+//       closePopup (popup)
+//     }
+//   });
+// });
 
-function closeByEsc (evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_open');
-    closePopup (openedPopup);
-  }
-}
+// function closeByEsc (evt) {
+//   if (evt.key === 'Escape') {
+//     const openedPopup = document.querySelector('.popup_open');
+//     closePopup (openedPopup);
+//   }
+// }
 
 
 
