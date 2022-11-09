@@ -2,6 +2,7 @@ import Card from './Card.js';
 import FormValidator from './Validate.js';
 import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 
 // Ссылки на попап
 const popupProfile = document.querySelector('#popup-profile');
@@ -103,25 +104,35 @@ function openPopupProfile () {
   formValidatorsObject.profile.refreshValidation ();
 }
 
+
+const popupWithInputElement = new PopupWithForm ('#popup-element', (evt) => {
+  evt.preventDefault();
+  cardList.addItem(new Card(popupWithInputElement._getInputValues(), '#element', (image, name) => {
+    popupWithImage.open(image, name)
+  }).generateCard());
+  popupWithInputElement.close();
+});
+
 function openPopupElement () {
-  document.forms.element.reset();
-  openPopup (popupElement);
+  popupWithInputElement.open();
   formValidatorsObject.element.refreshValidation ();
 }
 
-function openPopupImage (initialImage, initialName) {
-  image.src = initialImage;
-  image.alt = initialName;
-  imageTitle.textContent = initialName;
-  openPopup (popupImage);
-}
+// function openPopupImage (image, name) {
+//   image.src = image;
+//   image.alt = name;
+//   imageTitle.textContent = name;
+//   openPopup (popupImage);
+// }
 
 // Загрузить начальные картинки
 const cardList = new Section({
   items: initialCards.reverse(),
+  // Связывание через колбэк с классом Card,
+  // в параметрах которого связывание через колбэк с классом PopupWithImage
   renderer: (item) => {
-    cardList.addItem(new Card(item, '#element', (initialImage, initialName) => {
-      popupWithImage.open(initialImage, initialName)
+    cardList.addItem(new Card(item, '#element', (image, name) => {
+      popupWithImage.open(image, name)
     }).generateCard());
   }
 }, '.elements');
@@ -136,17 +147,13 @@ function submitProfile (evt) {
   closePopup (popupProfile);
   document.forms.profile.reset();
 }
-function submitElement (evt) {
+
+function submitElement (inputValues) {
   evt.preventDefault();
-  const elementInputItem = {
-    name: nameElementInput.value,
-    link: linkElementInput.value,
-  }
-  cardList.addItem(new Card(elementInputItem, '#element', (initialImage, initialName) => {
-    popupWithImage.open(initialImage, initialName)
+  cardList.addItem(new Card(inputValues, '#element', (image, name) => {
+    popupWithImage.open(image, name)
   }).generateCard());
-  closePopup (popupElement);
-  document.forms.element.reset();
+  this.close();
 }
 
 // Слушать
@@ -154,7 +161,7 @@ profileEditButton.addEventListener('click', openPopupProfile);
 elementAddButton.addEventListener('click',openPopupElement);
 // formCloseButtons.forEach((c) => c.addEventListener('click',() => closePopup(c.closest('.popup'))));
 popupProfile.addEventListener('submit', submitProfile);
-popupElement.addEventListener('submit', submitElement);
+// popupElement.addEventListener('submit', submitElement);
 
 // Выключение попапов
 // popups.forEach((popup) => {
