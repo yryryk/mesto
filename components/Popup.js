@@ -3,7 +3,9 @@ export default class Popup {
   constructor (popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupCloseButton = this._popup.querySelector('.popup__close-button');
-
+    // Свойства объекта содержащие методы объекта привязанные к контексту
+    // для передачи слушателям в качестве колбэка,
+    // что обеспечивает возможность в дальнейшем удалить эти слушатели
     this._handleEscCloser = this._handleEscClose.bind(this);
     this._handleOverlayCloser = this._handleOverlayClose.bind(this);
     this._closer= this.close.bind(this);
