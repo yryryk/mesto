@@ -33,13 +33,18 @@ const handleCardClick = (image, name) => {
   popupWithImage.open(image, name);
 }
 
+function createCard(item) {
+  const cardElement = new Card(item, '#element', handleCardClick).generateCard();
+ return cardElement
+}
+
 // Вставить на страницу начальные картинки
 const cardList = new Section({
   items: initialCards.reverse(),
   // Связывание через колбэк с классом Card,
   // в параметрах которого связывание через колбэк с классом PopupWithImage
   renderer: (item) => {
-    cardList.addItem(new Card(item, '#element', handleCardClick).generateCard());
+    cardList.addItem(createCard(item));
   }
 }, '.elements');
 cardList.renderItems();
@@ -47,7 +52,7 @@ cardList.renderItems();
 // Объект для попапа создания картинок
 const popupElement = new PopupWithForm ('#popup-element', (evt) => {
   evt.preventDefault();
-  cardList.addItem(new Card(popupElement.getInputValues(), '#element', handleCardClick).generateCard());
+  cardList.addItem(createCard(popupElement.getInputValues()));
   popupElement.close();
 });
 // Открытие попапа создания картинок
