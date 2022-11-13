@@ -25,7 +25,9 @@ export default class FormValidator {
   refreshValidation () {
     this._inputList.forEach((inputElement) => {
       // Очистить валидацию полей ввода при повторном открытии попапа
-      this._hideInputError(inputElement);
+      if (inputElement.classList.contains(this._validationSettings.inputErrorClass)) {
+        this._hideInputError(inputElement);
+      }
       // Определить состояние кнопки при повторном открытии попапа после сабмита при предыдущем открытии
       this._toggleButtonState();
     });
