@@ -10,18 +10,22 @@ export default class FormValidator {
     this._buttonElement = this._formElement.querySelector(this._validationSettings.submitButtonSelector);
     this._toggleButtonState();
 
+    this._setEventListeners ()
+  };
+
+  _setEventListeners () {
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._toggleInputErrorState(inputElement);
         this._toggleButtonState();
       });
     });
-  };
+  }
 
   refreshValidation () {
     this._inputList.forEach((inputElement) => {
-      // Определить состояние полей ввода при повторном открытии попапа
-      this._toggleInputErrorState(inputElement);
+      // Очистить валидацию полей ввода при повторном открытии попапа
+      this._hideInputError(inputElement);
       // Определить состояние кнопки при повторном открытии попапа после сабмита при предыдущем открытии
       this._toggleButtonState();
     });
