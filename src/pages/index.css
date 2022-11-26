@@ -42,6 +42,7 @@
 @import url(../blocks/popup/_make-color/popup_make-color_dark.css);
 @import url(../blocks/popup/_type/popup_type_setter.css);
 @import url(../blocks/popup/_type/popup_type_image.css);
+@import url(../blocks/popup/_type/popup_type_accept.css);
 @import url(../blocks/input/_type/input_type_error.css);
 @import url(../blocks/popup/__input-error/_active/popup__input-error_active.css);
 @import url(../blocks/popup/__submit-button/_inactive/popup__submit-button_inactive.css);

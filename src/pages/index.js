@@ -4,6 +4,7 @@ import FormValidator from '../components/Validate.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithAccept from '../components/PopupWithAccept.js';
 import UserInfo from '../components/UserInfo.js';
 import {validationSettings, initialCards} from '../utils/constants.js';
 
@@ -26,6 +27,18 @@ formList.forEach((formElement) => {
   formValidatorsObject[formElement.getAttribute('name')] = formValidatorObject;
 });
 
+
+// Объект попапа для подтверждения удаления картинок
+const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
+  evt.preventDefault();
+  popupWithAccept.deleteCard ()
+  popupWithAccept.close();
+});
+
+const openPopupWithAccept = (element) => {
+  popupWithAccept.open();
+  popupWithAccept.setElement (element);
+}
 // Объект попапа для просмотра картинок
 const popupWithImage = new PopupWithImage ('#popup-image');
 // Колбэк связывания классов
@@ -34,7 +47,7 @@ const handleCardClick = (image, name) => {
 }
 
 function createCard(item) {
-  const cardElement = new Card(item, '#element', handleCardClick).generateCard();
+  const cardElement = new Card(item, '#element', handleCardClick, openPopupWithAccept).generateCard();
  return cardElement
 }
 
