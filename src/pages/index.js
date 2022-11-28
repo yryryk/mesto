@@ -6,6 +6,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithAccept from '../components/PopupWithAccept.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import {validationSettings, initialCards} from '../utils/constants.js';
 
 // Ссылки кнопки
@@ -31,7 +32,7 @@ formList.forEach((formElement) => {
 // Объект попапа для подтверждения удаления картинок
 const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
   evt.preventDefault();
-  popupWithAccept.deleteCard ()
+  popupWithAccept.deleteCard ();
   popupWithAccept.close();
 });
 
@@ -39,6 +40,7 @@ const openPopupWithAccept = (element) => {
   popupWithAccept.open();
   popupWithAccept.setElement (element);
 }
+
 // Объект попапа для просмотра картинок
 const popupWithImage = new PopupWithImage ('#popup-image');
 // Колбэк связывания классов
@@ -75,7 +77,7 @@ function openPopupElement () {
 }
 
 // Объект для редактирования профиля
-const userInfo = new UserInfo ({name: '.profile__title', description: '.profile__subtitle'});
+const userInfo = new UserInfo ({name: '.profile__title', about: '.profile__subtitle', avatar: '.profile__user-picture'});
 // Объект для попапа редактирования профиля
 const popupProfile = new PopupWithForm ('#popup-profile', (evt) => {
   evt.preventDefault();
@@ -88,3 +90,14 @@ function openPopupProfile () {
   popupProfile.setInputValues(userInfo.getUserInfo())
   formValidatorsObject.profile.refreshValidation ();
 }
+
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-54',
+  headers: {
+    authorization: 'a77c8be0-2dca-4e0d-816d-247a8a434831',
+    'Content-Type': 'application/json'
+  }
+});
+api.getUserInfo()
+.then((result) => {userInfo.setUserInfo (result)});
