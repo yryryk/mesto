@@ -53,35 +53,26 @@ function createCard(item) {
 }
 
 // Вставить на страницу начальные картинки
-const renderInitialCards = (initialCards) => {
-  const cardList = new Section({
-    items: initialCards.reverse(),
-    // Связывание через колбэк с классом Card,
-    // в параметрах которого связывание через колбэк с классом PopupWithImage
-    renderer: (item) => {
-      cardList.addItem(createCard(item));
-    }
-  }, '.elements');
-  cardList.renderItems();
+const cardList = new Section(
+  // Связывание через колбэк с классом Card,
+  // в параметрах которого связывание через колбэк с классом PopupWithImage
+  (item) => {
+    cardList.addItem(createCard(item))
 
-  return cardList
-}
+}, '.elements');
 
 // Попап создания картинок (вызываем после завершения renderInitialCards)
-const createPopupElement = (cardList) => {
-  const popupElement = new PopupWithForm ('#popup-element', (evt) => {
-    evt.preventDefault();
-    cardList.addItem(createCard(popupElement.getInputValues()));
-    popupElement.close();
-  });
-  // Открытие попапа создания картинок
-  function openPopupElement () {
-    popupElement.open();
-    formValidatorsObject.element.refreshValidation ();
-  }
-
-  elementAddButton.addEventListener('click',openPopupElement);
+const popupElement = new PopupWithForm ('#popup-element', (evt) => {
+  evt.preventDefault();
+  cardList.addItem(createCard(popupElement.getInputValues()));
+  popupElement.close();
+});
+// Открытие попапа создания картинок
+function openPopupElement () {
+  popupElement.open();
+  formValidatorsObject.element.refreshValidation ();
 }
+
 
 // Объект для редактирования профиля
 const userInfo = new UserInfo ({name: '.profile__title', about: '.profile__subtitle', avatar: '.profile__user-picture'});
@@ -110,12 +101,20 @@ const api = new Api({
 api.getUserInfo()
 .then((result) => {
   userInfo.setUserInfo (result)
+})
+.catch((err) => {
+  console.log(err);
 });
 
+
+
 api.getInitialCards()
-.then(result =>
-  renderInitialCards(result)
-)
-.then((obj) => {
-  createPopupElement(obj);
+.then((result) => {
+  cardList.renderItems(result.reverse())
+})
+.then(() => {
+  elementAddButton.addEventListener('click',openPopupElement);
+})
+.catch((err) => {
+  console.log(err);
 });
