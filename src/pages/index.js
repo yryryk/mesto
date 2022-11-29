@@ -7,7 +7,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithAccept from '../components/PopupWithAccept.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
-import {validationSettings, initialCards} from '../utils/constants.js';
+import {validationSettings} from '../utils/constants.js';
 
 // Ссылки кнопки
 const profile = document.querySelector('.profile');
@@ -54,15 +54,18 @@ function createCard(item) {
 }
 
 // Вставить на страницу начальные картинки
-const cardList = new Section({
-  items: initialCards.reverse(),
-  // Связывание через колбэк с классом Card,
-  // в параметрах которого связывание через колбэк с классом PopupWithImage
-  renderer: (item) => {
-    cardList.addItem(createCard(item));
-  }
-}, '.elements');
-cardList.renderItems();
+let cardList;
+const renderInitialCards = (initialCards) => {
+  cardList = new Section({
+    items: initialCards.reverse(),
+    // Связывание через колбэк с классом Card,
+    // в параметрах которого связывание через колбэк с классом PopupWithImage
+    renderer: (item) => {
+      cardList.addItem(createCard(item));
+    }
+  }, '.elements');
+  cardList.renderItems();
+}
 
 // Объект для попапа создания картинок
 const popupElement = new PopupWithForm ('#popup-element', (evt) => {
@@ -99,5 +102,13 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+
 api.getUserInfo()
-.then((result) => {userInfo.setUserInfo (result)});
+.then((result) => {
+  userInfo.setUserInfo (result)
+});
+
+api.getInitialCards()
+.then((result) => {
+  renderInitialCards(result);
+});

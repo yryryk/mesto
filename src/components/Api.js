@@ -43,6 +43,19 @@ export default class Api {
     });
   }
   getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers
+    })
+    .then(resolve => {
+      if (resolve.ok) {
+        return resolve.json();
+      }
+      return Promise.reject(`Ошибка: ${resolve.status}`);
+    })
+    .then(result => result)
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
 }
