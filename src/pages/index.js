@@ -51,17 +51,23 @@ function createCard(item) {
 
 // Вставить на страницу начальные картинки
 const cardList = new Section(
-  // Связывание через колбэк с классом Card,
-  // в параметрах которого связывание через колбэк с классом PopupWithImage
+  // Связывание через колбэк с классом Card
   (item) => {
     cardList.addItem(createCard(item))
-
 }, '.elements');
 
-// Попап создания картинок (вызываем после завершения renderInitialCards)
+// Попап создания картинок
 const popupElement = new PopupWithForm ('#popup-element', (evt) => {
   evt.preventDefault();
-  cardList.addItem(createCard(popupElement.getInputValues()));
+
+  api.setCard(popupElement.getInputValues())
+  .then((result) => {
+    cardList.addItem(createCard(result));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
   popupElement.close();
 });
 // Открытие попапа создания картинок
@@ -110,7 +116,7 @@ api.getUserInfo(setUserInfoFromServer);
 profileEditButton.addEventListener('click', openPopupProfile);
 
 function renderItemsFromServer (items) {
-  cardList.renderItems(items)
+  cardList.renderItems(items.reverse())
 };
 
 api.getInitialCards(renderItemsFromServer);

@@ -4,27 +4,6 @@ export default class Api {
     this._headers = headers;
   }
 
-  setUserInfo(values) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: values.name,
-        about: values.about
-      })
-    })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
-    .then(result => result)
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
   getUserInfo(setUserInfo) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
@@ -43,6 +22,27 @@ export default class Api {
     });
   }
 
+  setUserInfo(inputValues) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: inputValues.name,
+        about: inputValues.about
+      })
+    })
+    .then(resolve => {
+      if (resolve.ok) {
+        return resolve.json();
+      }
+      return Promise.reject(`Ошибка: ${resolve.status}`);
+    })
+    .then(result => result)
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   getInitialCards(renderItems) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
@@ -56,6 +56,27 @@ export default class Api {
     .then((result) => {
       renderItems(result)
     })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  setCard(inputValues) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: inputValues.name,
+        link: inputValues.link
+      })
+    })
+    .then(resolve => {
+      if (resolve.ok) {
+        return resolve.json();
+      }
+      return Promise.reject(`Ошибка: ${resolve.status}`);
+    })
+    .then(result => result)
     .catch((err) => {
       console.log(err);
     });
