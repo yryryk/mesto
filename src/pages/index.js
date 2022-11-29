@@ -14,9 +14,6 @@ const profile = document.querySelector('.profile');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const elementAddButton = profile.querySelector('.profile__add-button');
 
-// Слушатели кнопок редактирования и добавления
-profileEditButton.addEventListener('click', openPopupProfile);
-
 // Создаём объект и автоматически наполняем его экземплярами класса FormValidator
 // с именами ключей соответствующими валидируемой форме
 const formValidatorsObject = {};
@@ -98,23 +95,18 @@ const api = new Api({
   }
 });
 
-api.getUserInfo()
-.then((result) => {
-  userInfo.setUserInfo (result)
-})
-.catch((err) => {
-  console.log(err);
-});
+function setUserInfo (data) {
+  userInfo.setUserInfo(data)
+};
 
+api.getUserInfo(setUserInfo);
 
+profileEditButton.addEventListener('click', openPopupProfile);
 
-api.getInitialCards()
-.then((result) => {
-  cardList.renderItems(result.reverse())
-})
-.then(() => {
-  elementAddButton.addEventListener('click',openPopupElement);
-})
-.catch((err) => {
-  console.log(err);
-});
+function renderItems (items) {
+  cardList.renderItems(items)
+};
+
+api.getInitialCards(renderItems);
+
+elementAddButton.addEventListener('click',openPopupElement);

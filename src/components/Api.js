@@ -27,7 +27,7 @@ export default class Api {
     });
   }
 
-  getUserInfo() {
+  getUserInfo(setUserInfo) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
@@ -37,12 +37,14 @@ export default class Api {
       }
       return Promise.reject(`Ошибка: ${resolve.status}`);
     })
-    .then(result => result)
+    .then((result) => {
+      setUserInfo (result)
+    })
     .catch((err) => {
       console.log(err);
     });
   }
-  getInitialCards() {
+  getInitialCards(renderItems) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
@@ -52,7 +54,9 @@ export default class Api {
       }
       return Promise.reject(`Ошибка: ${resolve.status}`);
     })
-    .then(result => result)
+    .then((result) => {
+      renderItems(result)
+    })
     .catch((err) => {
       console.log(err);
     });
