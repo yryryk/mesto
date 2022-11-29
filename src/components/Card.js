@@ -1,10 +1,10 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, preDeleteCard) {
+  constructor(data, templateSelector, handleCardClick, handlePopupWithAccept) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
-    this._preDeleteCard = preDeleteCard;
+    this._handlePopupWithAccept = handlePopupWithAccept;
   }
 
   _getTemplate() {
@@ -36,7 +36,7 @@ export default class Card {
     });
     // Удалять картинки
     this._element.querySelector('.elements__delete-button').addEventListener('click', () => {
-      this._preDeleteCard(this._element);
+      this._handlePopupWithAccept(this._element);
     });
     // Просматривать картинки
     this._image.addEventListener('click', () => {

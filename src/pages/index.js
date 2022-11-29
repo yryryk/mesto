@@ -16,7 +16,6 @@ const elementAddButton = profile.querySelector('.profile__add-button');
 
 // Слушатели кнопок редактирования и добавления
 profileEditButton.addEventListener('click', openPopupProfile);
-elementAddButton.addEventListener('click',openPopupElement);
 
 // Создаём объект и автоматически наполняем его экземплярами класса FormValidator
 // с именами ключей соответствующими валидируемой форме
@@ -36,7 +35,7 @@ const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
   popupWithAccept.close();
 });
 
-const openPopupWithAccept = (element) => {
+const handlePopupWithAccept = (element) => {
   popupWithAccept.open();
   popupWithAccept.setElement (element);
 }
@@ -49,14 +48,13 @@ const handleCardClick = (image, name) => {
 }
 
 function createCard(item) {
-  const cardElement = new Card(item, '#element', handleCardClick, openPopupWithAccept).generateCard();
+  const cardElement = new Card(item, '#element', handleCardClick, handlePopupWithAccept).generateCard();
  return cardElement
 }
 
 // Вставить на страницу начальные картинки
-let cardList;
 const renderInitialCards = (initialCards) => {
-  cardList = new Section({
+  const cardList = new Section({
     items: initialCards.reverse(),
     // Связывание через колбэк с классом Card,
     // в параметрах которого связывание через колбэк с классом PopupWithImage
@@ -65,18 +63,24 @@ const renderInitialCards = (initialCards) => {
     }
   }, '.elements');
   cardList.renderItems();
+
+  return cardList
 }
 
-// Объект для попапа создания картинок
-const popupElement = new PopupWithForm ('#popup-element', (evt) => {
-  evt.preventDefault();
-  cardList.addItem(createCard(popupElement.getInputValues()));
-  popupElement.close();
-});
-// Открытие попапа создания картинок
-function openPopupElement () {
-  popupElement.open();
-  formValidatorsObject.element.refreshValidation ();
+// Попап создания картинок (вызываем после завершения renderInitialCards)
+const createPopupElement = (cardList) => {
+  const popupElement = new PopupWithForm ('#popup-element', (evt) => {
+    evt.preventDefault();
+    cardList.addItem(createCard(popupElement.getInputValues()));
+    popupElement.close();
+  });
+  // Открытие попапа создания картинок
+  function openPopupElement () {
+    popupElement.open();
+    formValidatorsObject.element.refreshValidation ();
+  }
+
+  elementAddButton.addEventListener('click',openPopupElement);
 }
 
 // Объект для редактирования профиля
@@ -109,6 +113,9 @@ api.getUserInfo()
 });
 
 api.getInitialCards()
-.then((result) => {
-  renderInitialCards(result);
+.then(result =>
+  renderInitialCards(result)
+)
+.then((obj) => {
+  createPopupElement(obj);
 });
