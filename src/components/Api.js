@@ -4,13 +4,13 @@ export default class Api {
     this._headers = headers;
   }
 
-  setUserInfo() {
-    fetch(`${this._baseUrl}/users/me`, {
+  setUserInfo(values) {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: 'Marie Skłodowska Curie',
-        about: 'Physicist and Chemist'
+        name: values.name,
+        about: values.about
       })
     })
     .then(resolve => {
@@ -19,9 +19,7 @@ export default class Api {
       }
       return Promise.reject(`Ошибка: ${resolve.status}`);
     })
-    .then((result) => {
-      console.log(result);
-    })
+    .then(result => result)
     .catch((err) => {
       console.log(err);
     });
@@ -44,6 +42,7 @@ export default class Api {
       console.log(err);
     });
   }
+
   getInitialCards(renderItems) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
@@ -61,7 +60,6 @@ export default class Api {
       console.log(err);
     });
   }
-
 }
 
 

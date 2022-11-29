@@ -76,7 +76,13 @@ const userInfo = new UserInfo ({name: '.profile__title', about: '.profile__subti
 // Объект для попапа редактирования профиля
 const popupProfile = new PopupWithForm ('#popup-profile', (evt) => {
   evt.preventDefault();
-  userInfo.setUserInfo (popupProfile.getInputValues());
+  api.setUserInfo(popupProfile.getInputValues())
+  .then((result) => {
+    userInfo.setUserInfo (result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
   popupProfile.close();
 });
 // Открытие попапа редактирования профиля
@@ -95,18 +101,18 @@ const api = new Api({
   }
 });
 
-function setUserInfo (data) {
+function setUserInfoFromServer (data) {
   userInfo.setUserInfo(data)
 };
 
-api.getUserInfo(setUserInfo);
+api.getUserInfo(setUserInfoFromServer);
 
 profileEditButton.addEventListener('click', openPopupProfile);
 
-function renderItems (items) {
+function renderItemsFromServer (items) {
   cardList.renderItems(items)
 };
 
-api.getInitialCards(renderItems);
+api.getInitialCards(renderItemsFromServer);
 
 elementAddButton.addEventListener('click',openPopupElement);
