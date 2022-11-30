@@ -1,5 +1,6 @@
 export default class Card {
   constructor(data, templateSelector, handleCardClick, handlePopupWithAccept) {
+    this._data = data;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
@@ -16,19 +17,19 @@ export default class Card {
       .content
       .querySelector('.elements__photo')
       .cloneNode(true);
-
     return elementsPhoto;
   }
 
-  generateCard() {
+  generateCard(userId) {
     this._element = this._getTemplate();
     this._element.querySelector('.elements__title').textContent = this._name;
     this._image = this._element.querySelector('.elements__image');
     this._image.src = this._link;
     this._image.alt = this._name;
     this._element.querySelector('.elements__like-value').textContent = this._likes.length;
-    this._setEventListeners();
     this._element.id = this._id;
+    this._userId = userId;
+    this._setEventListeners();
     return this._element;
   }
 
@@ -40,7 +41,7 @@ export default class Card {
     });
     // Удалять картинки
     this._deleteButton = this._element.querySelector('.elements__delete-button');
-    if (this._ownerId == '148ffed141ccd28cef3efa26') {
+    if (this._ownerId == this._userId) {
       this._deleteButton.addEventListener('click', () => {
         this._handlePopupWithAccept(this._element)
       })

@@ -4,7 +4,7 @@ export default class Api {
     this._headers = headers;
   }
 
-  getUserInfo(setUserInfo) {
+  getUserInfo(setUserInfoFromServer) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
@@ -15,7 +15,7 @@ export default class Api {
       return Promise.reject(`Ошибка: ${resolve.status}`);
     })
     .then((result) => {
-      setUserInfo (result)
+      setUserInfoFromServer (result, result._id);
     })
     .catch((err) => {
       console.log(err);

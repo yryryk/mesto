@@ -14,6 +14,45 @@ const profile = document.querySelector('.profile');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const elementAddButton = profile.querySelector('.profile__add-button');
 
+let userId;
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-54',
+  headers: {
+    authorization: 'a77c8be0-2dca-4e0d-816d-247a8a434831',
+    'Content-Type': 'application/json'
+  }
+});
+
+function setUserInfoFromServer (data, id) {
+  userInfo.setUserInfo(data);
+  userId = id;
+};
+
+function renderItemsFromServer (items) {
+  cardList.renderItems(items.reverse())
+};
+
+api.getUserInfo(setUserInfoFromServer)
+.then(() => {
+  profileEditButton.addEventListener('click', openPopupProfile);
+
+  api.getInitialCards(renderItemsFromServer)
+  .then(() => {
+    elementAddButton.addEventListener('click',openPopupElement);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+})
+.catch((err) => {
+  console.log(err);
+});
+
+
+
+
 // Создаём объект и автоматически наполняем его экземплярами класса FormValidator
 // с именами ключей соответствующими валидируемой форме
 const formValidatorsObject = {};
@@ -45,8 +84,8 @@ const handleCardClick = (image, name) => {
   popupWithImage.open(image, name);
 }
 
-function createCard(item) {
-  const cardElement = new Card(item, '#element', handleCardClick, handlePopupWithAccept).generateCard();
+function createCard(item, userId) {
+  const cardElement = new Card(item, '#element', handleCardClick, handlePopupWithAccept).generateCard(userId);
  return cardElement
 }
 
@@ -54,7 +93,7 @@ function createCard(item) {
 const cardList = new Section(
   // Связывание через колбэк с классом Card
   (item) => {
-    cardList.addItem(createCard(item))
+    cardList.addItem(createCard(item, userId))
 }, '.elements');
 
 // Попап создания картинок
@@ -63,7 +102,7 @@ const popupElement = new PopupWithForm ('#popup-element', (evt) => {
 
   api.setCard(popupElement.getInputValues())
   .then((result) => {
-    cardList.addItem(createCard(result));
+    cardList.addItem(createCard(result, userId));
   })
   .catch((err) => {
     console.log(err);
@@ -102,26 +141,3 @@ function openPopupProfile () {
 }
 
 
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-54',
-  headers: {
-    authorization: 'a77c8be0-2dca-4e0d-816d-247a8a434831',
-    'Content-Type': 'application/json'
-  }
-});
-
-function setUserInfoFromServer (data) {
-  userInfo.setUserInfo(data)
-};
-
-api.getUserInfo(setUserInfoFromServer);
-
-profileEditButton.addEventListener('click', openPopupProfile);
-
-function renderItemsFromServer (items) {
-  cardList.renderItems(items.reverse())
-};
-
-api.getInitialCards(renderItemsFromServer);
-
-elementAddButton.addEventListener('click',openPopupElement);
