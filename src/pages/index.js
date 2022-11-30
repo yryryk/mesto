@@ -50,8 +50,13 @@ api.getUserInfo(setUserInfoFromServer)
   console.log(err);
 });
 
-
-
+const handleLikeClick = (cardId, isLike) => {
+  if (isLike) {
+    return api.deleteLike(cardId)
+  }else{
+    return api.addLike(cardId)
+  }
+}
 
 // Создаём объект и автоматически наполняем его экземплярами класса FormValidator
 // с именами ключей соответствующими валидируемой форме
@@ -76,7 +81,6 @@ const handlePopupWithAccept = (element) => {
   popupWithAccept.open();
   popupWithAccept.setElement (element);
 }
-
 // Объект попапа для просмотра картинок
 const popupWithImage = new PopupWithImage ('#popup-image');
 // Колбэк связывания классов
@@ -85,7 +89,7 @@ const handleCardClick = (image, name) => {
 }
 
 function createCard(item, userId) {
-  const cardElement = new Card(item, '#element', handleCardClick, handlePopupWithAccept).generateCard(userId);
+  const cardElement = new Card(item, '#element', handleCardClick, handlePopupWithAccept, handleLikeClick).generateCard(userId);
  return cardElement
 }
 

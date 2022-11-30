@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, handlePopupWithAccept) {
+  constructor(data, templateSelector, handleCardClick, handlePopupWithAccept, handleLikeClick) {
     this._data = data;
     this._name = data.name;
     this._link = data.link;
@@ -9,6 +9,7 @@ export default class Card {
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handlePopupWithAccept = handlePopupWithAccept;
+    this._handleLikeClick = handleLikeClick;
   }
 
   _getTemplate() {
@@ -26,7 +27,9 @@ export default class Card {
     this._image = this._element.querySelector('.elements__image');
     this._image.src = this._link;
     this._image.alt = this._name;
-    this._element.querySelector('.elements__like-value').textContent = this._likes.length;
+    this._likesValue = this._element.querySelector('.elements__like-value');
+    this._likesValue.textContent = this._likes.length;
+    // console.log(this._likes);
     this._element.id = this._id;
     this._userId = userId;
     this._setEventListeners();
@@ -36,8 +39,19 @@ export default class Card {
   _setEventListeners() {
     // Лайкать картинки
     this._buttonLike = this._element.querySelector('.elements__like-button');
+    if (!this._buttonLike.classList.contains("elements__like-button_active")&&this._likes.some((item) => item._id === this._userId)) {
+      this._buttonLike.classList.add("elements__like-button_active")
+    }
     this._buttonLike.addEventListener('click', () => {
-      this._buttonLike.classList.toggle('elements__like-button_active')
+      this._handleLikeClick(this._id, this._likes.some((item) => item._id === this._userId))
+      .then((result) => {
+        this._likes = result.likes;
+        this._likesValue.textContent = this._likes.length;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      this._buttonLike.classList.toggle('elements__like-button_active');
     });
     // Удалять картинки
     this._deleteButton = this._element.querySelector('.elements__delete-button');
