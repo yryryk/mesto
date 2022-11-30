@@ -21,6 +21,10 @@ export default class PopupWithAccept extends Popup {
     this._element = element;
   }
 
+  getElement () {
+    return this._element
+  }
+
   deleteCard () {
     this._element.remove()
   }

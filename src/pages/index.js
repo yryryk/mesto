@@ -28,6 +28,7 @@ formList.forEach((formElement) => {
 // Объект попапа для подтверждения удаления картинок
 const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
   evt.preventDefault();
+  api.deleteCard(popupWithAccept.getElement().id);
   popupWithAccept.deleteCard ();
   popupWithAccept.close();
 });
@@ -82,6 +83,7 @@ const userInfo = new UserInfo ({name: '.profile__title', about: '.profile__subti
 // Объект для попапа редактирования профиля
 const popupProfile = new PopupWithForm ('#popup-profile', (evt) => {
   evt.preventDefault();
+
   api.setUserInfo(popupProfile.getInputValues())
   .then((result) => {
     userInfo.setUserInfo (result);
@@ -89,6 +91,7 @@ const popupProfile = new PopupWithForm ('#popup-profile', (evt) => {
   .catch((err) => {
     console.log(err);
   });
+
   popupProfile.close();
 });
 // Открытие попапа редактирования профиля
