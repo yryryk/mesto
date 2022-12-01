@@ -15,6 +15,12 @@ const profileEditButton = profile.querySelector('.profile__edit-button');
 const avatarEditButton = profile.querySelector('.profile__user-picture');
 const elementAddButton = profile.querySelector('.profile__add-button');
 
+const popups = Array.from(document.querySelectorAll('.popup'));
+const popupButtons = {};
+popups.forEach((popup) => {
+popupButtons[`${popup.id}-button`] = popup.querySelector('.popup__submit-button')
+});
+
 let userId;
 
 const api = new Api({
@@ -66,16 +72,17 @@ const handleLikeClick = (cardId, isLike) => {
 // Попап аватара
 const popupAvatar = new PopupWithForm ('#popup-avatar', (evt) => {
   evt.preventDefault();
+  popupButtons['popup-avatar-button'].textContent = 'Сохранение...';
 
   api.setUserAvatar(popupAvatar.getInputValues())
   .then((result) => {
     userInfo.setUserAvatar(result);
+    popupButtons['popup-avatar-button'].textContent = 'Сохранить';
+    popupAvatar.close();
   })
   .catch((err) => {
     console.log(err);
   });
-
-  popupAvatar.close();
 });
 // Открытие попапа аватара
 function openPopupAvatar () {
@@ -98,9 +105,17 @@ formList.forEach((formElement) => {
 // Объект попапа для подтверждения удаления картинок
 const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
   evt.preventDefault();
-  api.deleteCard(popupWithAccept.getElement().id);
-  popupWithAccept.deleteCard ();
-  popupWithAccept.close();
+  popupButtons['popup-accept-button'].textContent = 'Удаление...';
+
+  api.deleteCard(popupWithAccept.getElement().id)
+  .then(() => {
+    popupButtons['popup-accept-button'].textContent = 'Да';
+    popupWithAccept.deleteCard ();
+    popupWithAccept.close();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 });
 
 const handlePopupWithAccept = (element) => {
@@ -129,16 +144,17 @@ const cardList = new Section(
 // Попап создания картинок
 const popupElement = new PopupWithForm ('#popup-element', (evt) => {
   evt.preventDefault();
+  popupButtons['popup-element-button'].textContent = 'Сохранение...';
 
   api.setCard(popupElement.getInputValues())
   .then((result) => {
     cardList.addItem(createCard(result, userId));
+    popupButtons['popup-element-button'].textContent = 'Создать';
+    popupElement.close();
   })
   .catch((err) => {
     console.log(err);
   });
-
-  popupElement.close();
 });
 // Открытие попапа создания картинок
 function openPopupElement () {
@@ -152,16 +168,17 @@ const userInfo = new UserInfo ({name: '.profile__title', about: '.profile__subti
 // Объект для попапа редактирования профиля
 const popupProfile = new PopupWithForm ('#popup-profile', (evt) => {
   evt.preventDefault();
+  popupButtons['popup-profile-button'].textContent = 'Сохранение...';
 
   api.setUserInfo(popupProfile.getInputValues())
   .then((result) => {
     userInfo.setUserInfo (result);
+    popupButtons['popup-profile-button'].textContent = 'Сохранить';
+    popupProfile.close();
   })
   .catch((err) => {
     console.log(err);
   });
-
-  popupProfile.close();
 });
 // Открытие попапа редактирования профиля
 function openPopupProfile () {
@@ -169,5 +186,3 @@ function openPopupProfile () {
   popupProfile.setInputValues(userInfo.getUserInfo())
   formValidatorsObject.profile.refreshValidation ();
 }
-
-
