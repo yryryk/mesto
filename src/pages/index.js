@@ -14,15 +14,16 @@ const profile = document.querySelector('.profile');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const avatarEditButton = profile.querySelector('.profile__user-picture');
 const elementAddButton = profile.querySelector('.profile__add-button');
-
+// Создаём объект с сабмитами
 const popups = Array.from(document.querySelectorAll('.popup'));
 const popupButtons = {};
 popups.forEach((popup) => {
 popupButtons[`${popup.id}-button`] = popup.querySelector('.popup__submit-button')
 });
-
+// id юзера придёт с сервера
 let userId;
 
+// Объект взаимодействия с сервером
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-54',
   headers: {
@@ -41,11 +42,13 @@ function renderItemsFromServer (items) {
   cardList.renderItems(items.reverse())
 };
 
+// Начальная загрузка данных
 api.getUserInfo(setUserInfoFromServer)
 .then(() => {
 
   profileEditButton.addEventListener('click', openPopupProfile);
   avatarEditButton.addEventListener('click', openPopupAvatar);
+
   // Что-бы правильно отрендерить корзины в карточках нужно дождаться получения userId в setUserInfoFromServer
   api.getInitialCards(renderItemsFromServer)
   .then(() => {
@@ -59,15 +62,6 @@ api.getUserInfo(setUserInfoFromServer)
 .catch((err) => {
   console.log(err);
 });
-
-const handleLikeClick = (cardId, isLike) => {
-  if (isLike) {
-    return api.deleteLike(cardId)
-  }else{
-    return api.addLike(cardId)
-  }
-}
-
 
 // Попап аватара
 const popupAvatar = new PopupWithForm ('#popup-avatar', (evt) => {
@@ -90,18 +84,6 @@ function openPopupAvatar () {
   formValidatorsObject.avatar.refreshValidation ();
 }
 
-
-// Создаём объект и автоматически наполняем его экземплярами класса FormValidator
-// с именами ключей соответствующими валидируемой форме
-const formValidatorsObject = {};
-const formList = Array.from(document.querySelectorAll(validationSettings.formSelector));
-formList.forEach((formElement) => {
-  const formValidatorObject = new FormValidator(validationSettings, formElement);
-  formValidatorObject.enableValidation();
-  formValidatorsObject[formElement.getAttribute('name')] = formValidatorObject;
-});
-
-
 // Объект попапа для подтверждения удаления картинок
 const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
   evt.preventDefault();
@@ -118,13 +100,22 @@ const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
   });
 });
 
+// Объект попапа для просмотра картинок
+const popupWithImage = new PopupWithImage ('#popup-image');
+// Передадим колбэком в new Card
+const handleLikeClick = (cardId, isLike) => {
+  if (isLike) {
+    return api.deleteLike(cardId)
+  }else{
+    return api.addLike(cardId)
+  }
+}
+
 const handlePopupWithAccept = (element) => {
   popupWithAccept.open();
   popupWithAccept.setElement (element);
 }
-// Объект попапа для просмотра картинок
-const popupWithImage = new PopupWithImage ('#popup-image');
-// Колбэк связывания классов
+
 const handleCardClick = (image, name) => {
   popupWithImage.open(image, name);
 }
@@ -162,7 +153,6 @@ function openPopupElement () {
   formValidatorsObject.element.refreshValidation ();
 }
 
-
 // Объект для редактирования профиля
 const userInfo = new UserInfo ({name: '.profile__title', about: '.profile__subtitle', avatar: '.profile__user-picture'});
 // Объект для попапа редактирования профиля
@@ -186,3 +176,13 @@ function openPopupProfile () {
   popupProfile.setInputValues(userInfo.getUserInfo())
   formValidatorsObject.profile.refreshValidation ();
 }
+
+// Создаём объект и автоматически наполняем его экземплярами класса FormValidator
+// с именами ключей соответствующими валидируемой форме
+const formValidatorsObject = {};
+const formList = Array.from(document.querySelectorAll(validationSettings.formSelector));
+formList.forEach((formElement) => {
+  const formValidatorObject = new FormValidator(validationSettings, formElement);
+  formValidatorObject.enableValidation();
+  formValidatorsObject[formElement.getAttribute('name')] = formValidatorObject;
+});
