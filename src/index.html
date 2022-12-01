@@ -20,7 +20,7 @@
   <main>
     <section class="profile">
       <div class="profile__user">
-        <div class="profile__user-picture"></div>
+        <button aria-label="кнопка добавить" type="button" class="profile__user-picture"><div class="profile__user-pen-editing"></div></button>
         <div class="profile__user-info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <button aria-label="кнопка редактировать" type="button" class="button-opacity profile__edit-button"></button>
@@ -99,6 +99,19 @@
       <h2 class="popup__title">Вы уверены?</h2>
       <form class="popup__form" name="accept" novalidate>
         <button aria-label="кнопка принять" type="submit" class="popup__submit-button">Да</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_setter" id="popup-avatar">
+    <div class="popup__window">
+      <button aria-label="кнопка закрытия" type="button" class="button-opacity popup__close-button"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="popup__form" name="avatar" novalidate>
+        <label class="popup__field">
+          <input id="title-input" type="url" name="avatar" class="input" placeholder="Ссылка на аватар" required>
+          <span class="title-input-error popup__input-error"></span>
+        </label>
+        <button aria-label="кнопка сохранить" type="submit" class="popup__submit-button">Сохранить</button>
       </form>
     </div>
   </div>

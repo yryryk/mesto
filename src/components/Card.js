@@ -42,6 +42,7 @@ export default class Card {
     if (!this._buttonLike.classList.contains("elements__like-button_active")&&this._likes.some((item) => item._id === this._userId)) {
       this._buttonLike.classList.add("elements__like-button_active")
     }
+
     this._buttonLike.addEventListener('click', () => {
       this._handleLikeClick(this._id, this._likes.some((item) => item._id === this._userId))
       .then((result) => {

@@ -132,6 +132,26 @@ export default class Api {
       console.log(err);
     });
   }
+
+  setUserAvatar(inputValues) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: inputValues.avatar
+      })
+    })
+    .then(resolve => {
+      if (resolve.ok) {
+        return resolve.json();
+      }
+      return Promise.reject(`Ошибка: ${resolve.status}`);
+    })
+    .then(result => result)
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 }
 
 

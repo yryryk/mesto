@@ -12,6 +12,7 @@ import {validationSettings} from '../utils/constants.js';
 // Ссылки кнопки
 const profile = document.querySelector('.profile');
 const profileEditButton = profile.querySelector('.profile__edit-button');
+const avatarEditButton = profile.querySelector('.profile__user-picture');
 const elementAddButton = profile.querySelector('.profile__add-button');
 
 let userId;
@@ -26,6 +27,7 @@ const api = new Api({
 
 function setUserInfoFromServer (data, id) {
   userInfo.setUserInfo(data);
+  userInfo.setUserAvatar (data);
   userId = id;
 };
 
@@ -35,8 +37,10 @@ function renderItemsFromServer (items) {
 
 api.getUserInfo(setUserInfoFromServer)
 .then(() => {
-  profileEditButton.addEventListener('click', openPopupProfile);
 
+  profileEditButton.addEventListener('click', openPopupProfile);
+  avatarEditButton.addEventListener('click', openPopupAvatar);
+  // Что-бы правильно отрендерить корзины в карточках нужно дождаться получения userId в setUserInfoFromServer
   api.getInitialCards(renderItemsFromServer)
   .then(() => {
     elementAddButton.addEventListener('click',openPopupElement);
@@ -57,6 +61,28 @@ const handleLikeClick = (cardId, isLike) => {
     return api.addLike(cardId)
   }
 }
+
+
+// Попап аватара
+const popupAvatar = new PopupWithForm ('#popup-avatar', (evt) => {
+  evt.preventDefault();
+
+  api.setUserAvatar(popupAvatar.getInputValues())
+  .then((result) => {
+    userInfo.setUserAvatar(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+  popupAvatar.close();
+});
+// Открытие попапа аватара
+function openPopupAvatar () {
+  popupAvatar.open();
+  formValidatorsObject.avatar.refreshValidation ();
+}
+
 
 // Создаём объект и автоматически наполняем его экземплярами класса FormValidator
 // с именами ключей соответствующими валидируемой форме
