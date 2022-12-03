@@ -27,11 +27,7 @@ export default class Api {
         about: inputValues.about
       })
     })
-    .then(this._checkExecution)
-    .then(result => result)
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution);
   }
 
   getInitialCards() {
@@ -50,11 +46,7 @@ export default class Api {
         link: inputValues.link
       })
     })
-    .then(this._checkExecution)
-    .then(result => result)
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution);
   }
 
   deleteCard(cardId) {
@@ -62,11 +54,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(this._checkExecution)
-    // .then((result) => {console.log(result)})
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution);
   }
 
   addLike(cardId) {
@@ -74,11 +62,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-    .then(this._checkExecution)
-    .then(result => result)
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution);
   }
 
   deleteLike(cardId) {
@@ -86,11 +70,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(this._checkExecution)
-    .then(result => result)
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution);
   }
 
   setUserAvatar(inputValues) {
@@ -101,11 +81,7 @@ export default class Api {
         avatar: inputValues.avatar
       })
     })
-    .then(this._checkExecution)
-    .then(result => result)
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution);
   }
 }
 
