@@ -70,13 +70,12 @@ function openPopupAvatar () {
 }
 
 // Объект попапа для подтверждения удаления картинок
-const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
-  evt.preventDefault();
+const popupWithAccept = new PopupWithAccept ('#popup-accept', (card) => {
   popupButtons['popup-accept-button'].textContent = 'Удаление...';
 
-  api.deleteCard(popupWithAccept.getElement().id)
+  api.deleteCard(popupWithAccept.cardId)
   .then(() => {
-    popupWithAccept.deleteCard ();
+    card.deleteCard ();
     popupWithAccept.close();
   })
   .catch((err) => {
@@ -110,9 +109,9 @@ const handleLikeClick = (cardId, isLike, setLikes) => {
   }
 }
 
-const handlePopupWithAccept = (element) => {
+const handlePopupWithAccept = (card) => {
   popupWithAccept.open();
-  popupWithAccept.setElement (element);
+  popupWithAccept.setCard (card);
 }
 
 const handleCardClick = (image, name) => {

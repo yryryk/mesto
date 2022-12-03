@@ -9,23 +9,19 @@ export default class PopupWithAccept extends Popup {
 
   setEventListeners () {
     super.setEventListeners ();
-    this._form.addEventListener('submit', this._submit);
+    this._form.addEventListener('submit', this._submiter = (evt) => {
+      evt.preventDefault();
+      this._submit(this._card)
+    });
   }
 
   removeEventListeners () {
     super.removeEventListeners ();
-    this._form.removeEventListener('submit', this._submit);
+    this._form.removeEventListener('submit', this._submiter);
   }
 
-  setElement (element) {
-    this._element = element;
-  }
-
-  getElement () {
-    return this._element
-  }
-
-  deleteCard () {
-    this._element.remove()
+  setCard (card) {
+    this._card = card;
+    this.cardId = card.id;
   }
 }
