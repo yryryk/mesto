@@ -32,35 +32,26 @@ const api = new Api({
   }
 });
 
-// Начальная загрузка данных
-api.getUserInfo()
-.then((result) => {
-  userInfo.setUserInfo(result);
-  userInfo.setUserAvatar (result);
-  userId = result._id;
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+.then(([resultInfo, resultCards]) => {
+  userInfo.setUserInfo(resultInfo);
+  userInfo.setUserAvatar (resultInfo);
+  userId = resultInfo._id;
+  cardList.renderItems(resultCards.reverse());
+  // Редактировать загруженный профиль и отрендеренные картинки после их появления
+  profileEditButton.addEventListener('click', openPopupProfile);
+  avatarEditButton.addEventListener('click', openPopupAvatar);
+  elementAddButton.addEventListener('click',openPopupElement);
 })
 .catch((err) => {
   console.log(err);
 });
-
-api.getInitialCards()
-.then((result) => {
-  cardList.renderItems(result.reverse())
-})
-.catch((err) => {
-  console.log(err);
-});
-
-profileEditButton.addEventListener('click', openPopupProfile);
-avatarEditButton.addEventListener('click', openPopupAvatar);
-elementAddButton.addEventListener('click',openPopupElement);
 
 // Попап аватара
-const popupAvatar = new PopupWithForm ('#popup-avatar', (evt) => {
-  evt.preventDefault();
+const popupAvatar = new PopupWithForm ('#popup-avatar', (inputValues) => {
   popupButtons['popup-avatar-button'].textContent = 'Сохранение...';
 
-  api.setUserAvatar(popupAvatar.getInputValues())
+  api.setUserAvatar(inputValues)
   .then((result) => {
     userInfo.setUserAvatar(result);
     popupButtons['popup-avatar-button'].textContent = 'Сохранить';
@@ -125,11 +116,10 @@ const cardList = new Section(
 }, '.elements');
 
 // Попап создания картинок
-const popupElement = new PopupWithForm ('#popup-element', (evt) => {
-  evt.preventDefault();
+const popupElement = new PopupWithForm ('#popup-element', (inputValues) => {
   popupButtons['popup-element-button'].textContent = 'Сохранение...';
 
-  api.setCard(popupElement.getInputValues())
+  api.setCard(inputValues)
   .then((result) => {
     cardList.addItem(createCard(result, userId));
     popupButtons['popup-element-button'].textContent = 'Создать';
@@ -148,11 +138,10 @@ function openPopupElement () {
 // Объект для редактирования профиля
 const userInfo = new UserInfo ({name: '.profile__title', about: '.profile__subtitle', avatar: '.profile__user-picture'});
 // Объект для попапа редактирования профиля
-const popupProfile = new PopupWithForm ('#popup-profile', (evt) => {
-  evt.preventDefault();
+const popupProfile = new PopupWithForm ('#popup-profile', (inputValues) => {
   popupButtons['popup-profile-button'].textContent = 'Сохранение...';
 
-  api.setUserInfo(popupProfile.getInputValues())
+  api.setUserInfo(inputValues)
   .then((result) => {
     userInfo.setUserInfo (result);
     popupButtons['popup-profile-button'].textContent = 'Сохранить';
