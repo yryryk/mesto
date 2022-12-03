@@ -4,16 +4,18 @@ export default class Api {
     this._headers = headers;
   }
 
+  _checkExecution(resolve) {
+    if (resolve.ok) {
+      return resolve.json();
+    }
+    return Promise.reject(`Ошибка: ${resolve.status}`);
+  }
+
   getUserInfo(setUserInfoFromServer) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     .then((result) => {
       setUserInfoFromServer (result, result._id);
     })
@@ -31,12 +33,7 @@ export default class Api {
         about: inputValues.about
       })
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     .then(result => result)
     .catch((err) => {
       console.log(err);
@@ -47,12 +44,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     .then((result) => {
       renderItems(result)
     })
@@ -70,12 +62,7 @@ export default class Api {
         link: inputValues.link
       })
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     .then(result => result)
     .catch((err) => {
       console.log(err);
@@ -87,12 +74,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     // .then((result) => {console.log(result)})
     .catch((err) => {
       console.log(err);
@@ -104,12 +86,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     .then(result => result)
     .catch((err) => {
       console.log(err);
@@ -121,12 +98,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     .then(result => result)
     .catch((err) => {
       console.log(err);
@@ -141,12 +113,7 @@ export default class Api {
         avatar: inputValues.avatar
       })
     })
-    .then(resolve => {
-      if (resolve.ok) {
-        return resolve.json();
-      }
-      return Promise.reject(`Ошибка: ${resolve.status}`);
-    })
+    .then(resolve => this._checkExecution(resolve))
     .then(result => result)
     .catch((err) => {
       console.log(err);

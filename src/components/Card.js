@@ -48,11 +48,11 @@ export default class Card {
       .then((result) => {
         this._likes = result.likes;
         this._likesValue.textContent = this._likes.length;
+        this._buttonLike.classList.toggle('elements__like-button_active');
       })
       .catch((err) => {
         console.log(err);
       });
-      this._buttonLike.classList.toggle('elements__like-button_active');
     });
     // Удалять картинки
     this._deleteButton = this._element.querySelector('.elements__delete-button');
