@@ -90,11 +90,23 @@ const popupWithAccept = new PopupWithAccept ('#popup-accept', (evt) => {
 // Объект попапа для просмотра картинок
 const popupWithImage = new PopupWithImage ('#popup-image');
 // Передадим колбэком в new Card
-const handleLikeClick = (cardId, isLike) => {
+const handleLikeClick = (cardId, isLike, setLikes) => {
   if (isLike) {
-    return api.deleteLike(cardId)
+    api.deleteLike(cardId)
+    .then((result) => {
+      setLikes(result)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }else{
-    return api.addLike(cardId)
+    api.addLike(cardId)
+    .then((result) => {
+      setLikes(result)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 }
 

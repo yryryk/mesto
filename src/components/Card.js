@@ -10,6 +10,7 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handlePopupWithAccept = handlePopupWithAccept;
     this._handleLikeClick = handleLikeClick;
+    this._setLikes = this._setLikes.bind(this);
   }
 
   _getTemplate() {
@@ -28,34 +29,34 @@ export default class Card {
     this._image.src = this._link;
     this._image.alt = this._name;
     this._likesValue = this._element.querySelector('.elements__like-value');
-    this._likesValue.textContent = this._likes.length;
-    // console.log(this._likes);
+    this._buttonLike = this._element.querySelector('.elements__like-button');
+    this._deleteButton = this._element.querySelector('.elements__delete-button');
     this._element.id = this._id;
     this._userId = userId;
+    if (!this._buttonLike.classList.contains("elements__like-button_active")&&this._likes.some((item) => item._id === this._userId)) {
+      this._buttonLike.classList.add("elements__like-button_active")
+    }
+    this._setNumberOfLikes();
     this._setEventListeners();
     return this._element;
   }
 
+  _setNumberOfLikes() {
+    this._likesValue.textContent = this._likes.length;
+  }
+
+  _setLikes(result) {
+    this._likes = result.likes;
+    this._setNumberOfLikes();
+    this._buttonLike.classList.toggle('elements__like-button_active');
+  }
+
   _setEventListeners() {
     // Лайкать картинки
-    this._buttonLike = this._element.querySelector('.elements__like-button');
-    if (!this._buttonLike.classList.contains("elements__like-button_active")&&this._likes.some((item) => item._id === this._userId)) {
-      this._buttonLike.classList.add("elements__like-button_active")
-    }
-
     this._buttonLike.addEventListener('click', () => {
-      this._handleLikeClick(this._id, this._likes.some((item) => item._id === this._userId))
-      .then((result) => {
-        this._likes = result.likes;
-        this._likesValue.textContent = this._likes.length;
-        this._buttonLike.classList.toggle('elements__like-button_active');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      this._handleLikeClick(this._id, this._likes.some((item) => item._id === this._userId), this._setLikes);
     });
     // Удалять картинки
-    this._deleteButton = this._element.querySelector('.elements__delete-button');
     if (this._ownerId == this._userId) {
       this._deleteButton.addEventListener('click', () => {
         this._handlePopupWithAccept(this._element)
