@@ -11,17 +11,11 @@ export default class Api {
     return Promise.reject(`Ошибка: ${resolve.status}`);
   }
 
-  getUserInfo(setUserInfoFromServer) {
+  getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-    .then(resolve => this._checkExecution(resolve))
-    .then((result) => {
-      setUserInfoFromServer (result, result._id);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution)
   }
 
   setUserInfo(inputValues) {
@@ -33,24 +27,18 @@ export default class Api {
         about: inputValues.about
       })
     })
-    .then(resolve => this._checkExecution(resolve))
+    .then(this._checkExecution)
     .then(result => result)
     .catch((err) => {
       console.log(err);
     });
   }
 
-  getInitialCards(renderItems) {
+  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-    .then(resolve => this._checkExecution(resolve))
-    .then((result) => {
-      renderItems(result)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .then(this._checkExecution)
   }
 
   setCard(inputValues) {
@@ -62,7 +50,7 @@ export default class Api {
         link: inputValues.link
       })
     })
-    .then(resolve => this._checkExecution(resolve))
+    .then(this._checkExecution)
     .then(result => result)
     .catch((err) => {
       console.log(err);
@@ -74,7 +62,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(resolve => this._checkExecution(resolve))
+    .then(this._checkExecution)
     // .then((result) => {console.log(result)})
     .catch((err) => {
       console.log(err);
@@ -86,7 +74,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-    .then(resolve => this._checkExecution(resolve))
+    .then(this._checkExecution)
     .then(result => result)
     .catch((err) => {
       console.log(err);
@@ -98,7 +86,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(resolve => this._checkExecution(resolve))
+    .then(this._checkExecution)
     .then(result => result)
     .catch((err) => {
       console.log(err);
@@ -113,7 +101,7 @@ export default class Api {
         avatar: inputValues.avatar
       })
     })
-    .then(resolve => this._checkExecution(resolve))
+    .then(this._checkExecution)
     .then(result => result)
     .catch((err) => {
       console.log(err);

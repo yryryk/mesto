@@ -32,36 +32,28 @@ const api = new Api({
   }
 });
 
-function setUserInfoFromServer (data, id) {
-  userInfo.setUserInfo(data);
-  userInfo.setUserAvatar (data);
-  userId = id;
-};
-
-function renderItemsFromServer (items) {
-  cardList.renderItems(items.reverse())
-};
-
 // Начальная загрузка данных
-api.getUserInfo(setUserInfoFromServer)
-.then(() => {
-
-  profileEditButton.addEventListener('click', openPopupProfile);
-  avatarEditButton.addEventListener('click', openPopupAvatar);
-
-  // Что-бы правильно отрендерить корзины в карточках нужно дождаться получения userId в setUserInfoFromServer
-  api.getInitialCards(renderItemsFromServer)
-  .then(() => {
-    elementAddButton.addEventListener('click',openPopupElement);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
+api.getUserInfo()
+.then((result) => {
+  userInfo.setUserInfo(result);
+  userInfo.setUserAvatar (result);
+  userId = result._id;
 })
 .catch((err) => {
   console.log(err);
 });
+
+api.getInitialCards()
+.then((result) => {
+  cardList.renderItems(result.reverse())
+})
+.catch((err) => {
+  console.log(err);
+});
+
+profileEditButton.addEventListener('click', openPopupProfile);
+avatarEditButton.addEventListener('click', openPopupAvatar);
+elementAddButton.addEventListener('click',openPopupElement);
 
 // Попап аватара
 const popupAvatar = new PopupWithForm ('#popup-avatar', (evt) => {
