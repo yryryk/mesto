@@ -12,6 +12,7 @@ export default class FormValidator {
 
     this._setEventListeners ()
   };
+  
 
   _setEventListeners () {
     this._inputList.forEach((inputElement) => {
